@@ -1,5 +1,5 @@
 {
-  "name": "genlayer-project",
+  "name": "clausegate",
   "type": "module",
   "private": true,
   "workspaces": ["frontend"],
@@ -8,6 +8,7 @@
     "build": "cd frontend && npm run build",
     "start": "cd frontend && npm run start",
     "lint": "cd frontend && npm run lint",
+    "typecheck": "cd frontend && npm run typecheck",
     "deploy": "genlayer deploy"
   },
   "devDependencies": {

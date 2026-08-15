@@ -48,7 +48,7 @@ export function getStudioUrl(): string {
  */
 export function getContractAddress(): string {
   const address = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
-  if (!address) {
+  if (!address || address === "your_contract_address") {
     // Return empty string during build, error will be shown in UI during runtime
     return "";
   }
@@ -300,6 +300,8 @@ export function createMetaMaskWalletClient(): WalletClient | null {
 export function createGenLayerClient(address?: string) {
   const config: any = {
     chain: studionet,
+    endpoint: getStudioUrl(),
+    provider: getEthereumProvider() || undefined,
   };
 
   if (address) {
@@ -313,6 +315,8 @@ export function createGenLayerClient(address?: string) {
     // Return client without account on error
     return createClient({
       chain: studionet,
+      endpoint: getStudioUrl(),
+      provider: getEthereumProvider() || undefined,
     });
   }
 }

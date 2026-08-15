@@ -1,143 +1,77 @@
-# Sample GenLayer project
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/license/mit/)
-[![Discord](https://img.shields.io/badge/Discord-Join%20us-5865F2?logo=discord&logoColor=white)](https://discord.gg/8Jm4v89VAu)
-[![Telegram](https://img.shields.io/badge/Telegram--T.svg?style=social&logo=telegram)](https://t.me/genlayer)
-[![Twitter](https://img.shields.io/twitter/url/https/twitter.com/yeagerai.svg?style=social&label=Follow%20%40GenLayer)](https://x.com/GenLayer)
-[![GitHub star chart](https://img.shields.io/github/stars/yeagerai/genlayer-project-boilerplate?style=social)](https://star-history.com/#yeagerai/genlayer-js)
+# ClauseGate
 
-## About
-This project includes the boilerplate code for a GenLayer use case implementation, specifically a football bets game.
+Rules in. Decisions out.
 
-## What's included
-- An example intelligent contract (Football Bets) with web access and LLM integration
-- **Direct mode tests** — fast, in-memory unit tests with web/LLM mocking (~ms per test)
-- **Integration tests** — full end-to-end tests against GenLayer Studio
-- **Contract linting** — static analysis to catch common contract issues before deployment
-- **CI pipeline** — GitHub Actions workflow for linting and direct tests
-- A production-ready Next.js 15 frontend with TypeScript, TanStack Query, and Radix UI
-- Configuration file template and deployment scripts
+ClauseGate lets a user publish a natural-language Rulebook, submit a proposal against it, and request a consensus-backed compliance decision. The contract stores the exact Rulebook and proposal text. GenLayer leaders and validators independently classify the same stored text as `COMPLIANT`, `NON_COMPLIANT`, or `UNCLEAR`.
 
-## Requirements
-- Python >= 3.12
-- [GenLayer CLI](https://github.com/genlayerlabs/genlayer-cli) globally installed: `npm install -g genlayer`
-- GenLayer Studio (for integration tests and deployment): Install from [Docs](https://docs.genlayer.com/developers/intelligent-contracts/tooling-setup#using-the-genlayer-studio) or use the hosted [GenLayer Studio](https://studio.genlayer.com/)
+GenLayer is necessary here because the authoritative classification is nondeterministic model execution. The frontend only submits text and reads the result; it never computes or overrides the verdict. A strict custom leader/validator equivalence function rejects malformed output, disagreement, and validator failure. Only `COMPLIANT` creates a queryable approval certificate.
 
-## Project Structure
+## Architecture
 
-```
-contracts/              # Python intelligent contracts
-tests/
-  direct/               # Fast in-memory tests (no Studio required)
-    test_create_bet.py   # Bet creation logic
-    test_resolve_bet.py  # Bet resolution with web/LLM mocks
-    test_views.py        # Read-only view methods
-  integration/           # Full tests against GenLayer Studio
-    test_football_bets.py
-    fixtures.py          # Expected state fixtures
-frontend/               # Next.js 15 app (TypeScript, TanStack Query, Radix UI)
-deploy/                 # TypeScript deployment scripts
-gltest.config.yaml      # Test runner network configuration
-pyproject.toml          # Python/pytest configuration
-.github/workflows/      # CI pipeline
+- `contracts/clausegate.py` — minimal Rulebook/submission storage, strict state machine, prompt boundary, consensus review, digest and certificate views.
+- `frontend/` — Next.js, React, TypeScript, Tailwind and GenLayerJS application.
+- `tests/direct/` — deterministic in-memory contract tests with model fixtures and consensus fault cases.
+- `deploy/deployScript.ts` — source-hashed, crash-safe deployment journal in `artifacts/clausegate-deployment.json`.
+
+There is no application database. Explicit on-chain ID collections support frontend enumeration.
+
+## Setup
+
+Prerequisites are recorded in [`docs/TOOLCHAIN.md`](docs/TOOLCHAIN.md). Install the existing npm workflow:
+
+```bash
+npm ci
+copy frontend\.env.example frontend\.env.local
 ```
 
-## Quick Start
+Set `NEXT_PUBLIC_GENLAYER_RPC_URL`, the network values, and the deployed `NEXT_PUBLIC_CONTRACT_ADDRESS` in `frontend/.env.local`.
 
-### 1. Set up Python environment
+Run the app:
 
-```shell
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-### 2. Lint your contracts
-
-Run the GenVM linter to catch issues before deployment:
-
-```shell
-genvm-lint check contracts/football_bets.py
-```
-
-The linter catches:
-- Forbidden imports and non-deterministic calls
-- Invalid storage types (must use `TreeMap`, `DynArray`, `u256`, etc.)
-- Missing decorators and return type annotations
-- Non-deterministic operations outside equivalence principle blocks
-- And [20+ other rules](https://github.com/genlayerlabs/genvm-linter)
-
-### 3. Run direct mode tests
-
-Direct mode tests run contracts in-memory without needing GenLayer Studio. They use mocks for web requests and LLM calls, giving you fast feedback (~milliseconds per test):
-
-```shell
-pytest tests/direct/ -v
-```
-
-Direct mode features used in these tests:
-- `direct_deploy("contracts/file.py")` — deploy contract in memory
-- `direct_vm.sender = address` — set transaction sender
-- `direct_vm.mock_web(pattern, response)` — mock HTTP/render calls
-- `direct_vm.mock_llm(pattern, response)` — mock LLM responses
-- `direct_vm.expect_revert("message")` — assert expected failures
-- `direct_vm.clear_mocks()` — reset mocks between calls
-
-### 4. Deploy the contract
-
-1. Choose your network: `genlayer network`
-2. Deploy: `genlayer deploy` (runs the script in `/deploy/deployScript.ts`)
-
-### 5. Run integration tests
-
-Integration tests deploy the contract to GenLayer Studio and test with real consensus:
-
-```shell
-gltest tests/integration/ -v -s
-```
-
-These require GenLayer Studio running (local or hosted).
-
-### 6. Set up the frontend
-
-1. Copy `frontend/.env.example` to `frontend/.env`
-2. Add your deployed contract address as `NEXT_PUBLIC_CONTRACT_ADDRESS`
-3. Run:
-
-```shell
-cd frontend
-npm install
+```bash
 npm run dev
 ```
 
-The app will be available at http://localhost:3000/.
+## Contract API
 
-## How the Football Bets Contract Works
+Writes: `create_rulebook(rulebook_id, title, description, rules)`, `submit_proposal(submission_id, rulebook_id, title, proposal_text)`, and `review_submission(submission_id)`.
 
-1. **Creating Bets**: Users bet on a football match by providing the game date, teams, and predicted winner.
-2. **Resolving Bets**: After the match, the contract fetches results from BBC Sport, uses an LLM to extract the score, and validates via the equivalence principle.
-3. **Points**: Correct predictions earn points. Users can query their points or the leaderboard.
+Views: `get_rulebook`, `get_submission`, `get_certificate`, `get_rulebook_ids`, `get_submission_ids`, and `contract_info`.
 
-## Testing Strategy
+The only terminal verdicts are `COMPLIANT`, `NON_COMPLIANT`, and `UNCLEAR`. Terminal reviews cannot be overwritten. Failed consensus leaves a submission in `SUBMITTED` and never issues a certificate.
 
-| Test Type | Command | Speed | Requires Studio |
-|-----------|---------|-------|-----------------|
-| **Lint** | `genvm-lint check contracts/*.py` | ~250ms | No |
-| **Direct** | `pytest tests/direct/ -v` | ~ms/test | No |
-| **Integration** | `gltest tests/integration/ -v -s` | ~min/test | Yes |
+## Testing and release checks
 
-**Recommended workflow:**
-1. Lint after every contract change
-2. Run direct tests frequently during development
-3. Run integration tests before deployment to verify consensus behavior
+```bash
+python -m pytest tests/direct/ -q
+$env:PYTHONUTF8='1'; genvm-lint check contracts/clausegate.py
+npm run typecheck
+npm run build
+```
 
-For AI coding agents (Claude Code, Cursor, etc.), the linter and direct tests provide the fast feedback loop needed for iterative development without requiring a running Studio instance.
+The direct suite covers Rulebook/proposal validation, duplicate and missing IDs, enumeration, strict output parsing, matching/mismatching consensus, validator exceptions, prompt-injection fixtures, digest recomputation, certificate gating, terminal state, and clock/randomness guardrails. `tools/mutation_test.py` runs actual source mutations against those tests and writes results to `artifacts/mutation-results.json`.
 
-## Community
-- **[Discord](https://discord.gg/8Jm4v89VAu)**: Discussions, support, and announcements
-- **[Telegram](https://t.me/genlayer)**: Informal chats and quick updates
+Integration tests require a running GenLayer Studio/localnet:
 
-## Documentation
-For detailed information, see our [documentation](https://docs.genlayer.com/).
+```bash
+gltest tests/integration/ -v -s
+```
 
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## Deployment
+
+Select the intended network, then run the repository deployment command:
+
+```bash
+genlayer network
+npm run deploy
+```
+
+The deployment script persists the source SHA-256 and transaction hash immediately, resumes a recorded transaction after interruption, waits for `FINALIZED`, records the exact receipt and queries `contract_info()`. Failed attempts remain in the artifact journal.
+
+## Security model
+
+Rulebook titles, descriptions, rules, submission titles, and proposal bodies are untrusted data inside explicit prompt delimiters. The prompt forbids browsing, web search, instruction changes, schema changes, and assumptions outside the submitted text. The parser accepts only one exact verdict field. No local clock or consensus-sensitive randomness enters contract state. Certificate digests bind the Rulebook content, submission content, submitter, identity, and final verdict.
+
+## Live Bradbury proof
+
+No Bradbury deployment evidence is claimed in this repository until the local release gates are green and a final deployment, fresh compliant case, and fresh non-compliant case have independently verified final receipts, consensus results, source parity, certificate behavior, and digests.
