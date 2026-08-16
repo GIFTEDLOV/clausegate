@@ -4,15 +4,16 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Copy } from "lucide-react";
 import { useState } from "react";
 
-import { EXPLORER } from "@/lib/genlayer/network";
+import { contractExplorerUrl, transactionExplorerUrl } from "@/lib/genlayer/explorer";
 
 const CONTRACT = "0x49446d1e225Ba9821d38457DcdCAb31b2170c061";
 const COMPLIANT_ID = "clausegate-compliant-20260816";
 const NONCOMPLIANT_ID = "clausegate-noncompliant-20260816";
 const COMPLIANT_REVIEW = "0xac0d127d3cfb29fe202d91851129bb77814ef21ba4f17c1d61aee0e07bd675bb";
 const NONCOMPLIANT_REVIEW = "0x8a0119082d0b69e1f5833b212d08cb84acf5fe5a09e088f31e560af1e41c30d7";
+const DEPLOYMENT_TX = "0xf368d4c9c188ccc5f5475b6dab9df7e88e3b2e6ec068e50ea8c33899e86d1c78";
 
-const txHref = (hash: string) => `${EXPLORER}/transactions/${hash}`;
+const txHref = transactionExplorerUrl;
 
 export function HeroConsensusField() {
   return (
@@ -102,7 +103,7 @@ function Transparency() {
             <div className="technical-row"><span className="technical-label">Network</span><span className="technical-value">GenLayer Bradbury</span></div>
             <div className="technical-row"><span className="technical-label">Production frontend release</span><span className="technical-value">ClauseGate institutional frontend</span></div>
           </div>
-          <div className="technical-actions"><a href="https://github.com/GIFTEDLOV/clausegate" target="_blank" rel="noreferrer">View source <ArrowUpRight size={14} /></a><a href={`${EXPLORER}/contracts/${CONTRACT}`} target="_blank" rel="noreferrer">View contract <ArrowUpRight size={14} /></a></div>
+          <div className="technical-actions"><a href="https://github.com/GIFTEDLOV/clausegate" target="_blank" rel="noreferrer">View source <ArrowUpRight size={14} /></a><a href={contractExplorerUrl(CONTRACT)} target="_blank" rel="noreferrer">View contract <ArrowUpRight size={14} /></a><a href={transactionExplorerUrl(DEPLOYMENT_TX)} target="_blank" rel="noreferrer">View deployment <ArrowUpRight size={14} /></a></div>
         </div>
       </div>
     </section>

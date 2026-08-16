@@ -1,12 +1,12 @@
 "use client";
 
 import { useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 
 import ClauseGate from "@/lib/contracts/ClauseGate";
 import { getContractAddress } from "@/lib/genlayer/client";
 import { useWallet } from "@/lib/genlayer/WalletProvider";
-import type { Rulebook, Submission } from "@/lib/contracts/types";
+import type { ApprovalCertificate, Rulebook, Submission } from "@/lib/contracts/types";
 
 export function useClauseGateContract() {
   const { address } = useWallet();
@@ -65,4 +65,31 @@ export function useCertificate(id: string, enabled: boolean) {
     enabled: Boolean(contract && id && enabled),
     staleTime: 4_000,
   });
+}
+
+export function useCertificates() {
+  const submissions = useSubmissions();
+  const contract = useClauseGateContract();
+  const candidates = useMemo(
+    () => (submissions.data || []).filter((item) => item.status === "REVIEWED" && item.verdict === "COMPLIANT" && item.certificate_issued),
+    [submissions.data],
+  );
+  const certificateQueries = useQueries({
+    queries: candidates.map((submission) => ({
+      queryKey: ["clausegate", "certificate", submission.submission_id],
+      queryFn: () => contract!.getCertificate(submission.submission_id),
+      enabled: Boolean(contract),
+      staleTime: 4_000,
+    })),
+  });
+  const error = submissions.error || certificateQueries.find((query) => query.error)?.error || null;
+  const data = certificateQueries.flatMap((query, index) => {
+    const certificate = query.data as ApprovalCertificate | null | undefined;
+    return certificate ? [{ submission: candidates[index], certificate }] : [];
+  });
+  return {
+    data,
+    error,
+    isLoading: submissions.isLoading || certificateQueries.some((query) => query.isLoading),
+  };
 }

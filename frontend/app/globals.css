@@ -282,7 +282,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .hero-grid { min-height: calc(90svh - 214px); }
   .protocol-grid, .transparency-grid, .form-layout, .rulebook-layout, .decision-layout { grid-template-columns: 1fr; gap: 54px; }
   .registry-header { display: none; }
-  .registry-row { grid-template-columns: 1fr auto; gap: 8px 18px; }
+  .registry-row { grid-template-columns: 1fr auto !important; gap: 8px 18px; }
   .registry-cell { grid-column: 1; }
   .registry-action { grid-column: 2; grid-row: 1 / span 3; align-self: center; }
 }

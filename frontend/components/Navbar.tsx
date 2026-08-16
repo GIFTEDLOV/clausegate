@@ -5,11 +5,12 @@ import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { EXPLORER } from "@/lib/genlayer/network";
+import { contractExplorerUrl, transactionExplorerUrl } from "@/lib/genlayer/explorer";
 import { AccountPanel } from "./AccountPanel";
 import { Logo } from "./Logo";
 
 const CONTRACT = "0x49446d1e225Ba9821d38457DcdCAb31b2170c061";
+const DEPLOYMENT_TX = "0xf368d4c9c188ccc5f5475b6dab9df7e88e3b2e6ec068e50ea8c33899e86d1c78";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -62,8 +63,8 @@ export function Navbar() {
               <div className="nav-sheet" role="menu">
                 <Link href="/rulebooks" onClick={() => setOpenMenu(null)}><strong>Rulebooks</strong><span>Publish exact requirements for evaluation.</span></Link>
                 <Link href="/submissions" onClick={() => setOpenMenu(null)}><strong>Submissions</strong><span>Commit proposal text for consensus review.</span></Link>
-                <Link href="/submissions" onClick={() => setOpenMenu(null)}><strong>Decisions</strong><span>View finalized validator decisions.</span></Link>
-                <Link href="/submissions" onClick={() => setOpenMenu(null)}><strong>Certificates</strong><span>Verify approvals issued to compliant submissions.</span></Link>
+                <Link href="/decisions" onClick={() => setOpenMenu(null)}><strong>Decisions</strong><span>View finalized validator decisions.</span></Link>
+                <Link href="/certificates" onClick={() => setOpenMenu(null)}><strong>Certificates</strong><span>Verify approvals issued to compliant submissions.</span></Link>
               </div>
             )}
           </div>
@@ -76,8 +77,8 @@ export function Navbar() {
             {openMenu === "developers" && (
               <div className="nav-sheet nav-sheet-right" role="menu">
                 <a href="https://github.com/GIFTEDLOV/clausegate" target="_blank" rel="noreferrer"><strong>GitHub <ArrowUpRight size={13} /></strong><span>Inspect the source and release.</span></a>
-                <a href={`${EXPLORER}/contracts/${CONTRACT}`} target="_blank" rel="noreferrer"><strong>Contract <ArrowUpRight size={13} /></strong><span>View the production Intelligent Contract.</span></a>
-                <a href={`${EXPLORER}/contracts/${CONTRACT}`} target="_blank" rel="noreferrer"><strong>Bradbury deployment <ArrowUpRight size={13} /></strong><span>Open the verified production address.</span></a>
+                <a href={contractExplorerUrl(CONTRACT)} target="_blank" rel="noreferrer"><strong>Contract <ArrowUpRight size={13} /></strong><span>View the production Intelligent Contract.</span></a>
+                <a href={transactionExplorerUrl(DEPLOYMENT_TX)} target="_blank" rel="noreferrer"><strong>Deployment transaction <ArrowUpRight size={13} /></strong><span>Open the verified Bradbury deployment transaction.</span></a>
                 <a href="https://www.genlayer.com" target="_blank" rel="noreferrer"><strong>GenLayer <ArrowUpRight size={13} /></strong><span>Learn about the consensus network.</span></a>
               </div>
             )}
@@ -98,11 +99,13 @@ export function Navbar() {
             <span className="eyebrow">Explore</span>
             <Link href="/rulebooks" onClick={closeMobile}>Rulebooks <span>↗</span></Link>
             <Link href="/submissions" onClick={closeMobile}>Submissions <span>↗</span></Link>
+            <Link href="/decisions" onClick={closeMobile}>Decisions <span>↗</span></Link>
+            <Link href="/certificates" onClick={closeMobile}>Certificates <span>↗</span></Link>
             <Link href="/#how-it-works" onClick={closeMobile}>How it works <span>↓</span></Link>
             <Link href="/#security" onClick={closeMobile}>Security <span>↓</span></Link>
             <span className="eyebrow mobile-nav-developers">Developers</span>
             <a href="https://github.com/GIFTEDLOV/clausegate" target="_blank" rel="noreferrer">GitHub <span>↗</span></a>
-            <a href={`${EXPLORER}/contracts/${CONTRACT}`} target="_blank" rel="noreferrer">Contract <span>↗</span></a>
+            <a href={contractExplorerUrl(CONTRACT)} target="_blank" rel="noreferrer">Contract <span>↗</span></a>
           </div>
           <Link className="button-primary mobile-launch" href="/rulebooks" onClick={closeMobile}>Launch App <span>→</span></Link>
         </div>
