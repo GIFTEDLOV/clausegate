@@ -2,11 +2,13 @@ import Link from "next/link";
 
 export function Logo() {
   return (
-    <Link href="/" className="inline-flex items-center gap-2.5" aria-label="ClauseGate home">
-      <span className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-ink text-sm font-bold text-white">
-        C
-      </span>
-      <span className="text-[1.05rem] font-semibold tracking-[-0.03em]">ClauseGate</span>
+    <Link href="/" className="brand-lockup" aria-label="ClauseGate home">
+      <svg className="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M4 8h7l10 8H4" />
+        <path d="M4 16h17l7 8H4" />
+        <path d="M4 24h17l7-8H14" />
+      </svg>
+      <span className="brand-wordmark">ClauseGate</span>
     </Link>
   );
 }

@@ -11,9 +11,7 @@ import { getContractAddress } from "@/lib/genlayer/client";
 import { useWallet } from "@/lib/genlayer/WalletProvider";
 import { useRulebook } from "@/lib/hooks/useClauseGate";
 
-function clientId(prefix: string) {
-  return `${prefix}-${typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2)}`;
-}
+function clientId(prefix: string) { return `${prefix}-${typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2)}`; }
 
 export default function SubmitProposalPage() {
   const params = useParams<{ id: string }>();
@@ -40,11 +38,11 @@ export default function SubmitProposalPage() {
       router.push(`/submissions/${encodeURIComponent(id)}`);
     } catch (reason) {
       setStage("error");
-      setError(reason instanceof Error ? reason.message : "We couldn’t submit this proposal. Please try again.");
+      setError(reason instanceof Error ? reason.message : "We couldn&apos;t submit this proposal. Please try again.");
     }
   }
 
-  if (rulebook.isLoading) return <AppShell><section className="container py-20"><div className="skeleton h-8 w-72" /><div className="skeleton mt-5 h-32" /></section></AppShell>;
-  if (rulebook.error || !rulebook.data) return <AppShell><section className="container py-20"><p className="form-error">This Rulebook could not be found.</p></section></AppShell>;
-  return <AppShell><section className="container max-w-3xl py-14 sm:py-20"><p className="eyebrow">Submit against</p><h1 className="mt-3 text-4xl font-light tracking-[-0.06em] sm:text-5xl">{rulebook.data.title}</h1><p className="mt-4 text-muted">Describe the submission the way you want it evaluated against the Rulebook.</p><form onSubmit={submit} className="surface mt-10 space-y-7 p-6 sm:p-8"><div><label className="form-label" htmlFor="proposal-title">Title</label><input id="proposal-title" className="input-field" placeholder="Open-source expense sharing app" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} maxLength={160} /></div><div><label className="form-label" htmlFor="proposal">Proposal</label><textarea id="proposal" className="textarea-field" placeholder="Describe the submission the way you want it evaluated against the Rulebook." value={form.proposal} onChange={(e) => setForm({ ...form, proposal: e.target.value })} maxLength={16000} /><p className="form-help">No external evidence links are required in this version. Keep the proposal focused on the published rules.</p></div>{error && <div className="form-error">{error}</div>}<TransactionProgress stage={stage} hash={hash} /><div className="flex flex-col-reverse justify-between gap-3 border-t border-line pt-6 sm:flex-row sm:items-center"><p className="text-xs text-muted">Submission received · waiting for network confirmation</p><button className="button-primary" type="submit" disabled={stage === "sent" || stage === "confirming"}>Submit proposal</button></div></form></section></AppShell>;
+  if (rulebook.isLoading) return <AppShell><section className="container app-main"><div className="skeleton" style={{ height: 40, width: 300 }} /><div className="skeleton" style={{ height: 150, marginTop: 28 }} /></section></AppShell>;
+  if (rulebook.error || !rulebook.data) return <AppShell><section className="container app-main"><p className="form-error">This Rulebook could not be found.</p></section></AppShell>;
+  return <AppShell><section className="container app-main"><div className="form-layout"><div className="form-intro"><p className="eyebrow">Formal submission workflow</p><h1 className="page-title">Submit for review.</h1><p>You are submitting against <strong>{rulebook.data.title}</strong>. Describe the submission the way you want it evaluated against the Rulebook.</p><p className="font-mono" style={{ marginTop: 32, color: "var(--muted)", fontSize: ".68rem", lineHeight: 1.6 }}>RULEBOOK / {rulebookId}</p></div><form onSubmit={submit} className="form-surface"><div className="form-section"><div className="form-field"><label className="form-label" htmlFor="proposal-title">Title</label><input id="proposal-title" className="input-field" placeholder="Open-source expense sharing app" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} maxLength={160} /></div><div className="form-field"><label className="form-label" htmlFor="proposal">Proposal</label><textarea id="proposal" className="textarea-field" placeholder="Describe the submission the way you want it evaluated against the Rulebook." value={form.proposal} onChange={(e) => setForm({ ...form, proposal: e.target.value })} maxLength={16000} /><p className="form-help">No external evidence links are required in this version. Keep the proposal focused on the published rules.</p></div>{error && <div className="form-error">{error}</div>}<TransactionProgress stage={stage} hash={hash} /><div className="form-actions"><p className="muted" style={{ flex: 1, fontSize: ".72rem" }}>Submission received · waiting for network confirmation</p><button className="button-primary" type="submit" disabled={stage === "sent" || stage === "confirming"}>Submit Proposal</button></div></div></form></div></section></AppShell>;
 }

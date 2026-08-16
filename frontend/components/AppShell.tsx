@@ -1,15 +1,19 @@
+"use client";
+
 import type { ReactNode } from "react";
+import { usePathname } from "next/navigation";
+import { AnnouncementBar } from "./AnnouncementBar";
 import { Navbar } from "./Navbar";
+import { SiteFooter } from "./SiteFooter";
 
 export function AppShell({ children }: { children: ReactNode }) {
+  const marketing = usePathname() === "/";
   return (
-    <div className="min-h-screen">
+    <div className={marketing ? "site-frame site-frame-marketing" : "site-frame site-frame-app"}>
+      {marketing && <AnnouncementBar />}
       <Navbar />
       <main>{children}</main>
-      <footer className="container flex flex-col gap-2 border-t border-line py-8 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
-        <span>ClauseGate · Rules in. Decisions out.</span>
-        <span>Consensus-powered compliance reviews on GenLayer.</span>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
