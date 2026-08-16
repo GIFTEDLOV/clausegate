@@ -79,7 +79,7 @@ export class ClauseGate {
 
   private async read(functionName: string, args: unknown[] = []) {
     let lastError: unknown;
-    for (let attempt = 0; attempt < 3; attempt += 1) {
+    for (let attempt = 0; attempt < 5; attempt += 1) {
       try {
         const value = await this.client.readContract({
           address: this.address,
@@ -89,7 +89,9 @@ export class ClauseGate {
         return normalize(value);
       } catch (error) {
         lastError = error;
-        if (attempt < 2) await new Promise((resolve) => setTimeout(resolve, 400 * (attempt + 1)));
+        if (attempt < 4) {
+          await new Promise((resolve) => setTimeout(resolve, 500 * 2 ** (attempt)));
+        }
       }
     }
     throw lastError instanceof Error ? lastError : new Error("Network read failed");
