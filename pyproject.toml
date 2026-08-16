@@ -2,4 +2,5 @@
 testpaths = ["tests"]
 markers = [
     "integration: tests requiring GenLayer Studio (run with gltest)",
+    "slow: nondeterministic live-LLM review tests (Stage 5); run with gltest -m slow",
 ]

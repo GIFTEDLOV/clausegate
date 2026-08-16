@@ -6,25 +6,57 @@ on:
   pull_request:
     branches: [main]
 
-jobs:
-  lint-contracts:
-    name: Lint Contracts
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - run: pip install -r requirements.txt
-      - run: genvm-lint check contracts/football_bets.py
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
-  test-direct:
-    name: Direct Mode Tests
+jobs:
+  contract:
+    name: Contract (lint, tests, mutations)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install -r requirements.txt
-      - run: pytest tests/direct/ -v
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: GenVM lint
+        run: genvm-lint check contracts/clausegate.py
+
+      - name: Direct mode tests
+        run: python -m pytest tests/direct/ -q
+
+      - name: Security / adversarial tests
+        run: python -m pytest tests/test_clausegate_security.py -q
+
+      - name: Mutation suite (all critical mutations must be killed)
+        run: python tools/mutation_test.py
+
+  frontend:
+    name: Frontend (typecheck, build) and deploy script
+    runs-on: ubuntu-latest
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install workspace dependencies
+        run: npm ci
+
+      - name: Frontend typecheck
+        run: npm run typecheck
+
+      - name: Frontend production build
+        run: npm run build
+
+      - name: Deployment script typecheck
+        run: npx tsc --noEmit -p tsconfig.json

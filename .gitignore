@@ -23,5 +23,6 @@ __pycache__/
 /frontend/package-lock.json
 /.pytest_cache
 *.compiled.js
-package-lock.json
+# The root package-lock.json is committed: CI uses `npm ci` for reproducible
+# installs across the frontend workspace. Only ignore nested/stray lockfiles.
 
