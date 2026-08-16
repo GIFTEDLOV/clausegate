@@ -1,23 +1,35 @@
 "use client";
 
 import { createClient } from "genlayer-js";
-import { studionet } from "genlayer-js/chains";
 import { createWalletClient, custom, type WalletClient } from "viem";
 
-// GenLayer Network Configuration (from environment variables with fallbacks)
-export const GENLAYER_CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_GENLAYER_CHAIN_ID || "61999");
-export const GENLAYER_CHAIN_ID_HEX = `0x${GENLAYER_CHAIN_ID.toString(16).toUpperCase()}`;
+import {
+  BRADBURY_CHAIN,
+  CHAIN_ID,
+  CHAIN_ID_HEX,
+  CHAIN_NAME,
+  EXPLORER,
+  RPC_URL,
+  SYMBOL,
+  resolveRpcUrl,
+} from "./network";
+
+// Production is pinned to GenLayer Bradbury via the SDK chain object. There is
+// no Studionet fallback: an inconsistent RPC override fails closed in
+// resolveRpcUrl() rather than silently switching networks.
+export const GENLAYER_CHAIN_ID = CHAIN_ID;
+export const GENLAYER_CHAIN_ID_HEX = CHAIN_ID_HEX;
 
 export const GENLAYER_NETWORK = {
-  chainId: GENLAYER_CHAIN_ID_HEX,
-  chainName: process.env.NEXT_PUBLIC_GENLAYER_CHAIN_NAME || "GenLayer Studio",
+  chainId: CHAIN_ID_HEX,
+  chainName: CHAIN_NAME,
   nativeCurrency: {
-    name: process.env.NEXT_PUBLIC_GENLAYER_SYMBOL || "GEN",
-    symbol: process.env.NEXT_PUBLIC_GENLAYER_SYMBOL || "GEN",
+    name: SYMBOL,
+    symbol: SYMBOL,
     decimals: 18,
   },
-  rpcUrls: [process.env.NEXT_PUBLIC_GENLAYER_RPC_URL || "https://studio.genlayer.com/api"],
-  blockExplorerUrls: [],
+  rpcUrls: [RPC_URL],
+  blockExplorerUrls: [EXPLORER],
 };
 
 // Ethereum provider type from window
@@ -35,12 +47,11 @@ declare global {
 }
 
 /**
- * Get the GenLayer RPC URL from environment variables
+ * Get the production Bradbury RPC URL. Honours an env override only when it
+ * points at the Bradbury host; otherwise fails closed (see resolveRpcUrl).
  */
-export function getStudioUrl(): string {
-  return (
-    process.env.NEXT_PUBLIC_GENLAYER_RPC_URL || "https://studio.genlayer.com/api"
-  );
+export function getRpcUrl(): string {
+  return resolveRpcUrl();
 }
 
 /**
@@ -281,7 +292,7 @@ export function createMetaMaskWalletClient(): WalletClient | null {
 
   try {
     return createWalletClient({
-      chain: studionet as any,
+      chain: BRADBURY_CHAIN as any,
       transport: custom(provider),
     });
   } catch (error) {
@@ -299,8 +310,8 @@ export function createMetaMaskWalletClient(): WalletClient | null {
  */
 export function createGenLayerClient(address?: string) {
   const config: any = {
-    chain: studionet,
-    endpoint: getStudioUrl(),
+    chain: BRADBURY_CHAIN,
+    endpoint: getRpcUrl(),
     provider: getEthereumProvider() || undefined,
   };
 
@@ -314,8 +325,8 @@ export function createGenLayerClient(address?: string) {
     console.error("Error creating GenLayer client:", error);
     // Return client without account on error
     return createClient({
-      chain: studionet,
-      endpoint: getStudioUrl(),
+      chain: BRADBURY_CHAIN,
+      endpoint: getRpcUrl(),
       provider: getEthereumProvider() || undefined,
     });
   }

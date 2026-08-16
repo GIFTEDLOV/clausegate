@@ -9,9 +9,9 @@
     "start": "cd frontend && npm run start",
     "lint": "cd frontend && npm run lint",
     "typecheck": "cd frontend && npm run typecheck",
-    "deploy": "genlayer deploy"
+    "deploy": "node deploy/scripts/deploy.mjs"
   },
   "devDependencies": {
-    "genlayer-js": "^1.1.8"
+    "genlayer-js": "1.1.8"
   }
 }

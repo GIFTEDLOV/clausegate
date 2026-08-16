@@ -6,7 +6,7 @@ import { Toaster } from "sonner";
 import { WalletProvider } from "@/lib/genlayer/WalletProvider";
 import { getContractAddress } from "@/lib/genlayer/client";
 import ClauseGate from "@/lib/contracts/ClauseGate";
-import { clearTransaction, getPendingTransactions } from "@/lib/transactions/journal";
+import { getPendingTransactions } from "@/lib/transactions/journal";
 import { useWallet } from "@/lib/genlayer/WalletProvider";
 
 function TransactionRecovery() {
@@ -21,8 +21,7 @@ function TransactionRecovery() {
     void Promise.all(
       getPendingTransactions().map(async (entry) => {
         try {
-          const receipt = await contract.waitForHash(entry.hash);
-          if (!cancelled) clearTransaction(entry.action, entry.entityId, receipt);
+          if (!cancelled) await contract.reconcilePending(entry);
         } catch {
           // The journal remains durable; a later visit can resume polling.
         }

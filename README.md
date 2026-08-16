@@ -59,14 +59,13 @@ gltest tests/integration/ -v -s
 
 ## Deployment
 
-Select the intended network, then run the repository deployment command:
+Unlock the intended GenLayer CLI account, then run the repository deployment command. It is pinned to the SDK's `testnetBradbury` chain and refuses mixed-network configuration:
 
 ```bash
-genlayer network
 npm run deploy
 ```
 
-The deployment script persists the source SHA-256 and transaction hash immediately, resumes a recorded transaction after interruption, waits for `FINALIZED`, records the exact receipt and queries `contract_info()`. Failed attempts remain in the artifact journal.
+The deployment script persists the source SHA-256 and transaction hash immediately, resumes a recorded transaction after interruption, requires `FINALIZED + AGREE +` successful execution, verifies materialized code/source parity and `contract_info()`, and records the exact receipt. Failed or unknown outcomes remain in `deploy/bradbury/deployment.json`; a recorded hash is never rebroadcast.
 
 ## Security model
 

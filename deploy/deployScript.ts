@@ -8,12 +8,16 @@ import {
   TransactionHash,
   TransactionStatus,
 } from "genlayer-js/types";
-import { localnet } from "genlayer-js/chains";
+import { testnetBradbury } from "genlayer-js/chains";
 
 type DeploymentJournal = {
   contract: string;
   sourcePath: string;
   sourceSha256: string;
+  sourceBytes?: number;
+  network?: string;
+  chainId?: number;
+  sdkVersion?: string;
   status: string;
   txHash?: string;
   receipt?: Record<string, unknown>;
@@ -21,6 +25,8 @@ type DeploymentJournal = {
   contractInfo?: unknown;
   error?: string;
 };
+
+const EXPECTED_CHAIN_ID = Number(testnetBradbury.id);
 
 const artifactPath = path.resolve(process.cwd(), "artifacts/clausegate-deployment.json");
 
@@ -46,7 +52,17 @@ async function finalizeExisting(client: GenLayerClient<any>, journal: Deployment
     retries: 200,
     interval: 3_000,
   });
-  if (receipt.statusName !== TransactionStatus.FINALIZED && receipt.status !== 6) {
+  const raw = receipt as unknown as Record<string, unknown>;
+  const status = String(raw.statusName ?? raw.status_name ?? "").toUpperCase();
+  const result = String(raw.resultName ?? raw.result_name ?? "").toUpperCase();
+  const execution = String(
+    raw.txExecutionResultName ?? raw.tx_execution_result_name ?? "",
+  ).toUpperCase();
+  if (
+    (status !== TransactionStatus.FINALIZED && raw.status !== 6) ||
+    result !== "AGREE" ||
+    !["FINISHED_WITH_RETURN", "FINISHED_WITH_NO_RETURN"].includes(execution)
+  ) {
     throw new Error(`Deployment is not finalized: ${JSON.stringify(receipt)}`);
   }
   journal.status = "FINALIZED";
@@ -58,10 +74,24 @@ async function finalizeExisting(client: GenLayerClient<any>, journal: Deployment
 export default async function main(client: GenLayerClient<any>) {
   const sourcePath = path.resolve(process.cwd(), "contracts/clausegate.py");
   const code = new Uint8Array(readFileSync(sourcePath));
+  if (code.includes(0x0d)) {
+    throw new Error("Refusing to deploy: contracts/clausegate.py must contain canonical LF bytes");
+  }
+  if (Number((client.chain as GenLayerChain).id) !== EXPECTED_CHAIN_ID) {
+    throw new Error(
+      `Refusing to deploy: client chain is ${String((client.chain as GenLayerChain).id)}, ` +
+        `expected Bradbury ${EXPECTED_CHAIN_ID}`,
+    );
+  }
   const sourceSha256 = createHash("sha256").update(code).digest("hex");
   const prior = loadJournal();
 
-  if (prior?.sourceSha256 === sourceSha256 && prior.txHash && prior.status !== "FAILED") {
+  if (prior?.txHash) {
+    if (prior.sourceSha256 !== sourceSha256) {
+      throw new Error(
+        `A deployment transaction already exists for a different source SHA (${prior.sourceSha256}); refusing to redeploy`,
+      );
+    }
     const receipt = await finalizeExisting(client, prior);
     if (prior.contractAddress) {
       const info = await client.readContract({ address: prior.contractAddress as `0x${string}`, functionName: "contract_info", args: [] });
@@ -70,12 +100,17 @@ export default async function main(client: GenLayerClient<any>) {
       console.log(JSON.stringify({ ...prior, receipt }, null, 2));
       return;
     }
+    throw new Error("Existing deployment hash was reconciled without an address; refusing to redeploy");
   }
 
   const journal: DeploymentJournal = {
     contract: "ClauseGate",
     sourcePath,
     sourceSha256,
+    sourceBytes: code.length,
+    network: testnetBradbury.name,
+    chainId: EXPECTED_CHAIN_ID,
+    sdkVersion: "1.1.8",
     status: "PREPARED",
   };
 
@@ -88,9 +123,8 @@ export default async function main(client: GenLayerClient<any>) {
 
     const receipt = await finalizeExisting(client, journal);
     const contractAddress = (
-      (client.chain as GenLayerChain).id === localnet.id
-        ? receipt.data?.contract_address
-        : (receipt.txDataDecoded as DecodedDeployData)?.contractAddress
+      receipt.data?.contract_address ??
+      (receipt.txDataDecoded as DecodedDeployData)?.contractAddress
     ) as string | undefined;
     if (!contractAddress) throw new Error(`Finalized deployment did not include a contract address: ${JSON.stringify(receipt)}`);
 

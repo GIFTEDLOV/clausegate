@@ -1,0 +1,19 @@
+# The contract source is deployed byte-for-byte: the deploy harness reads
+# contracts/clausegate.py and submits exactly those bytes as the deploy payload.
+# Its SHA-256 therefore decides the deployed code, and GenLayer derives the
+# contract address from the transaction that carries it.
+#
+# Without pinning, the bytes depend on the checkout platform: Git stores LF, but
+# a Windows checkout with core.autocrlf=true materialises CRLF, so a deploy from
+# Windows and one from Linux CI would submit *different contracts* from the same
+# commit. Pinning to LF makes the deployed bytes a property of the commit, not
+# of the machine that built them.
+contracts/clausegate.py text eol=lf
+
+# Keep all Python and the deploy harness canonical across platforms.
+*.py text eol=lf
+deploy/**/*.ts text eol=lf
+deploy/**/*.mjs text eol=lf
+
+# Live Bradbury evidence is hashed nowhere but should not churn across platforms.
+deploy/bradbury/**/*.json text eol=lf
