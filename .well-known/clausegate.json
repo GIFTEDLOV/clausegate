@@ -3,7 +3,7 @@
   "submission_id": "v2-real-github-controlled",
   "rulebook_id": "v2-real-public-repository",
   "submitter": "0x19E7E376E7C213B7E7e7e46cc70A5dD086DAff2A",
-  "source_url": "https://github.com/GIFTEDLOV/clausegate",
+  "source_url": "https://github.com/giftedlov/clausegate",
   "evidence_commitment": "dd5b3044fa5096a744b4ff6f1332ee53e9809b4f208bcbdb8170f654a58b119d",
-  "control_digest": "158425f934f449670e43f64198dc592ac3e5d62a103cff1cf24cc56a054e2b6a"
+  "control_digest": "bb8100d96bf4426ef4199bb1aa1a8f92079ec4dfeb1dbdaeec15f88132b71e8b"
 }
