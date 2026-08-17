@@ -18,7 +18,7 @@ from gltest import get_contract_factory, get_default_account
 from gltest.assertions import tx_execution_succeeded
 
 
-SENDER = "0xeF3c34646049eAf74f7a0eDC4cce143a865085F5"
+SENDER = "0x19E7E376E7C213B7E7e7e46cc70A5dD086DAff2A"
 CONTROLLED_REPOSITORY = "https://github.com/GIFTEDLOV/clausegate"
 CONTROLLED_EVIDENCE = [
     {
