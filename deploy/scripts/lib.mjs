@@ -18,7 +18,6 @@ import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
 const gljs = require("genlayer-js");
-const keytar = require("keytar");
 
 const { createClient, createAccount, chains } = gljs;
 
@@ -105,10 +104,12 @@ export function resultDigest(rulebook, submission, verdict) {
 
 // -------------------------------------------------------------------- signing
 export async function isUnlocked(name) {
+  const keytar = require("keytar");
   return (await keytar.getPassword(KEYCHAIN_SERVICE, `account:${name}`)) !== null;
 }
 
 export async function signer(name) {
+  const keytar = require("keytar");
   const key = await keytar.getPassword(KEYCHAIN_SERVICE, `account:${name}`);
   if (!key) {
     throw new Error(
