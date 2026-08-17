@@ -2,7 +2,9 @@
   "name": "clausegate",
   "type": "module",
   "private": true,
-  "workspaces": ["frontend"],
+  "workspaces": [
+    "frontend"
+  ],
   "scripts": {
     "dev": "cd frontend && npm run dev",
     "build": "cd frontend && npm run build",
@@ -20,6 +22,7 @@
     "test:shots": "npm --workspace frontend run shots"
   },
   "devDependencies": {
-    "genlayer-js": "1.1.8"
+    "genlayer-js": "1.1.8",
+    "keytar": "^7.9.0"
   }
 }
