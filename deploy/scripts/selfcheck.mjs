@@ -152,6 +152,29 @@ async function main() {
     assert.equal(contractInfoMatches({ ...EXPECTED_CONTRACT_INFO, version: "9.9.9" }), false);
     assert.equal(contractInfoMatches({ ...EXPECTED_CONTRACT_INFO, verdicts: ["COMPLIANT"] }), false);
   });
+
+  // 14. Public deployment metadata and explorer helpers stay centralized.
+  sync("14 deployment metadata and explorer routes", () => {
+    const metadata = readFileSync(resolve(ROOT, "frontend", "lib", "config", "deployment.ts"), "utf8");
+    const explorer = readFileSync(resolve(ROOT, "frontend", "lib", "genlayer", "explorer.ts"), "utf8");
+    const deployScript = readFileSync(resolve(ROOT, "deploy", "scripts", "deploy.mjs"), "utf8");
+    assert.ok(metadata.includes("0x49446d1e225Ba9821d38457DcdCAb31b2170c061"));
+    assert.ok(metadata.includes("clausegate-compliant-20260816"));
+    assert.ok(explorer.includes("/address/"));
+    assert.ok(explorer.includes("/tx/"));
+    assert.ok(deployScript.includes("/address/"));
+    assert.ok(!deployScript.includes("/contracts/"));
+    assert.ok(!/studionet/i.test(metadata));
+  });
+
+  // 15. Python release inputs are immutable rather than floating branches/ranges.
+  sync("15 Python dependencies immutable", () => {
+    const req = readFileSync(resolve(ROOT, "requirements.txt"), "utf8");
+    assert.match(req, /genlayer-py @ git\+[^\n]+@[0-9a-f]{40}/);
+    assert.match(req, /genlayer-test @ git\+[^\n]+@[0-9a-f]{40}/);
+    assert.match(req, /genvm-linter @ git\+[^\n]+@[0-9a-f]{40}/);
+    assert.ok(!/>=/.test(req), "requirements must not contain floating lower bounds");
+  });
 }
 
 main().then(() => {

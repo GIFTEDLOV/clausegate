@@ -1,0 +1,12 @@
+{
+  "submission_id": "clausegate-compliant-20260816",
+  "tx_hash": "0xac0d127d3cfb29fe202d91851129bb77814ef21ba4f17c1d61aee0e07bd675bb",
+  "status": "FINALIZED",
+  "consensus": "AGREE",
+  "execution": "FINISHED_WITH_RETURN",
+  "verdict": "COMPLIANT",
+  "certificate_issued": true,
+  "certificate_result_digest": "dfa8197e73ebbf411afe3907ae9c8dcc64b0923fb1ce3ee33dd585a24af379c4",
+  "digest_verified": true,
+  "postcondition": "REVIEWED COMPLIANT, certificate and independent digest match"
+}

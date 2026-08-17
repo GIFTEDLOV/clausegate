@@ -1,7 +1,7 @@
-genlayer-py @ git+https://github.com/genlayerlabs/genlayer-py@v0.18
-genlayer-test @ git+https://github.com/genlayerlabs/genlayer-testing-suite@v0.29
-genvm-linter @ git+https://github.com/genlayerlabs/genvm-linter@main
-requests>=2.31.0
-python-dotenv>=1.0.1
-eth-account>=0.13.3
-eth-utils>=5.0.0
+genlayer-py @ git+https://github.com/genlayerlabs/genlayer-py@52b932b4fd0531352933bfba79b644d2ba4f3961
+genlayer-test @ git+https://github.com/genlayerlabs/genlayer-testing-suite@75a5bcde75582734caaf210b9ebadab358fd45cb
+genvm-linter @ git+https://github.com/genlayerlabs/genvm-linter@928bb51c42da8ff2512d81465d3e704f599aca47
+requests==2.34.2
+python-dotenv==1.2.2
+eth-account==0.13.7
+eth-utils==6.0.0

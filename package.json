@@ -9,7 +9,15 @@
     "start": "cd frontend && npm run start",
     "lint": "cd frontend && npm run lint",
     "typecheck": "cd frontend && npm run typecheck",
-    "deploy": "node deploy/scripts/deploy.mjs"
+    "deploy": "node deploy/scripts/deploy.mjs",
+    "repro": "node deploy/scripts/selfcheck.mjs",
+    "verify:evidence": "node tools/verify_release_evidence.mjs",
+    "secret-scan": "node tools/secret_scan.mjs",
+    "verify:production": "node tools/verify_production.mjs",
+    "test:frontend": "npm --workspace frontend run test",
+    "test:browser": "npm --workspace frontend run e2e",
+    "test:a11y": "npm --workspace frontend run a11y",
+    "test:shots": "npm --workspace frontend run shots"
   },
   "devDependencies": {
     "genlayer-js": "1.1.8"

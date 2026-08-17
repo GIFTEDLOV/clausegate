@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "network": {
+    "name": "GenLayer Bradbury",
+    "chain_name": "GenLayer Bradbury Testnet",
+    "chain_id": 4221,
+    "rpc_url": "https://rpc-bradbury.genlayer.com"
+  },
+  "contract_source": {
+    "release_commit": "66f05ad5700f5b5446f776a653b04bc69b2190f0",
+    "path": "contracts/clausegate.py",
+    "sha256": "47817b41586e44ac1a08b2a5daff8b184a0f9c69e9f020d23cf43dce8d87810d",
+    "bytes": 12195
+  },
+  "deployment": {
+    "contract_address": "0x49446d1e225Ba9821d38457DcdCAb31b2170c061",
+    "tx_hash": "0xf368d4c9c188ccc5f5475b6dab9df7e88e3b2e6ec068e50ea8c33899e86d1c78",
+    "consensus_status": "FINALIZED",
+    "consensus_result": "AGREE",
+    "execution_result": "FINISHED_WITH_RETURN",
+    "deployed_source_sha256": "47817b41586e44ac1a08b2a5daff8b184a0f9c69e9f020d23cf43dce8d87810d",
+    "contract_info": {
+      "name": "ClauseGate",
+      "version": "1.0.0",
+      "tagline": "Rules in. Decisions out.",
+      "verdicts": ["COMPLIANT", "NON_COMPLIANT", "UNCLEAR"],
+      "max_rulebook_rules": 12000,
+      "max_proposal": 16000
+    }
+  },
+  "frontend": {
+    "url": "https://clausegate.vercel.app",
+    "current_ui_release_commit": "3f420148fd30aded6bdc5823563a51eadb836ee8",
+    "current_deployment_id": "dpl_7FSWq83PFFPiJVEGWhXPKjNUdJcb"
+  },
+  "rulebook": {
+    "id": "clausegate-canonical-20260816",
+    "title": "Public Demo Integrity Rules",
+    "tx_hash": "0xd0a0841935068ed33576b96ee55779fcbea4b965ab119904cb037b4b39728e3a",
+    "status": "VERIFIED",
+    "consensus": "AGREE",
+    "execution": "FINISHED_WITH_RETURN"
+  },
+  "proofs": {
+    "compliant": {
+      "submission_id": "clausegate-compliant-20260816",
+      "submit_tx": "0x7327a8d190087273ccd83225fbbc83264f712449a31b399ea55ff70e8c273b8d",
+      "review_tx": "0xac0d127d3cfb29fe202d91851129bb77814ef21ba4f17c1d61aee0e07bd675bb",
+      "verdict": "COMPLIANT",
+      "certificate_issued": true,
+      "certificate_result_digest": "dfa8197e73ebbf411afe3907ae9c8dcc64b0923fb1ce3ee33dd585a24af379c4"
+    },
+    "noncompliant": {
+      "submission_id": "clausegate-noncompliant-20260816",
+      "submit_tx": "0xa1d9d88f6ec9a4d286cdd9fea429e4ba91fa1b12d81027c6ff6406ac8931f34d",
+      "review_tx": "0x8a0119082d0b69e1f5833b212d08cb84acf5fe5a09e088f31e560af1e41c30d7",
+      "verdict": "NON_COMPLIANT",
+      "certificate_issued": false,
+      "certificate_absent": true
+    }
+  }
+}

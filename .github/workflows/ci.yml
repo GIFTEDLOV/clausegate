@@ -10,6 +10,9 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   contract:
     name: Contract (lint, tests, mutations)
@@ -36,6 +39,32 @@ jobs:
       - name: Mutation suite (all critical mutations must be killed)
         run: python tools/mutation_test.py
 
+  repository:
+    name: Repository (evidence, reproducibility, secrets)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install workspace dependencies
+        run: npm ci
+
+      - name: Reproducibility checks
+        run: npm run repro
+
+      - name: Offline Bradbury evidence verification
+        run: npm run verify:evidence
+
+      - name: Secret scan
+        run: npm run secret-scan
+
+      - name: Resolved SDK tree
+        run: npm ls genlayer-js --all
+
   frontend:
     name: Frontend (typecheck, build) and deploy script
     runs-on: ubuntu-latest
@@ -60,3 +89,47 @@ jobs:
 
       - name: Deployment script typecheck
         run: npx tsc --noEmit -p tsconfig.json
+
+  frontend_quality:
+    name: Frontend (browser, accessibility, structural sweep)
+    runs-on: ubuntu-latest
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      PUPPETEER_SKIP_DOWNLOAD: "true"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install workspace dependencies
+        run: npm ci
+
+      - name: Install test browser
+        run: npx puppeteer browsers install chrome
+
+      - name: Frontend presentation invariants
+        run: npm run test:frontend
+
+      - name: Start local frontend
+        run: npm run dev --workspace frontend > /tmp/clausegate-next.log 2>&1 &
+
+      - name: Wait for local frontend
+        run: |
+          for attempt in {1..60}; do
+            if curl --fail --silent http://localhost:3000/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/clausegate-next.log
+          exit 1
+
+      - name: Browser smoke
+        run: npm run test:browser
+
+      - name: Accessibility checks
+        run: npm run test:a11y
+
+      - name: Visual, console, and request sweep
+        run: npm run test:shots

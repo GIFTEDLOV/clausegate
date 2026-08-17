@@ -1,0 +1,11 @@
+{
+  "submission_id": "clausegate-compliant-20260816",
+  "rulebook_id": "clausegate-canonical-20260816",
+  "title": "ClauseGate public demo",
+  "proposal_text": "The project is an open-source software project with a working public demo. Its source code is publicly accessible under an MIT license. It includes an automated test suite and a reproducible verification path. It contains no gambling, fraud, credential theft, or other intentionally deceptive behavior.",
+  "tx_hash": "0x7327a8d190087273ccd83225fbbc83264f712449a31b399ea55ff70e8c273b8d",
+  "status": "FINALIZED",
+  "consensus": "AGREE",
+  "execution": "FINISHED_WITH_RETURN",
+  "postcondition": "exact SUBMITTED submission verified"
+}

@@ -1,0 +1,11 @@
+{
+  "submission_id": "clausegate-noncompliant-20260816",
+  "tx_hash": "0x8a0119082d0b69e1f5833b212d08cb84acf5fe5a09e088f31e560af1e41c30d7",
+  "status": "FINALIZED",
+  "consensus": "AGREE",
+  "execution": "FINISHED_WITH_RETURN",
+  "verdict": "NON_COMPLIANT",
+  "certificate_issued": false,
+  "certificate_absent": true,
+  "postcondition": "REVIEWED NON_COMPLIANT, empty certificate and digest"
+}

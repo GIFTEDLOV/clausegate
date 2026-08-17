@@ -11,16 +11,17 @@ import { TransactionProgress } from "@/components/TransactionProgress";
 import ClauseGate from "@/lib/contracts/ClauseGate";
 import type { WriteStage } from "@/lib/contracts/types";
 import { contractExplorerUrl } from "@/lib/genlayer/explorer";
+import { DEPLOYMENT } from "@/lib/config/deployment";
 import { getContractAddress } from "@/lib/genlayer/client";
 import { useWallet } from "@/lib/genlayer/WalletProvider";
 import { useCertificate, useRulebook, useSubmission } from "@/lib/hooks/useClauseGate";
 
-const CONTRACT = "0x49446d1e225Ba9821d38457DcdCAb31b2170c061";
 const supportingCopy = {
   COMPLIANT: "This proposal was accepted against the published Rulebook.",
   NON_COMPLIANT: "This proposal did not satisfy the published Rulebook.",
   UNCLEAR: "Validators could not reach a defensible compliance decision from the submitted text.",
 };
+const CONTRACT = DEPLOYMENT.contractAddress;
 
 export default function SubmissionDetailPage() {
   const params = useParams<{ id: string }>();

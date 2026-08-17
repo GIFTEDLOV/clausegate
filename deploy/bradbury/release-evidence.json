@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "network": "GenLayer Bradbury Testnet",
+  "chainId": 4221,
+  "contractAddress": "0x49446d1e225Ba9821d38457DcdCAb31b2170c061",
+  "createdAt": "2026-08-16T13:06:49.609Z",
+  "stage": "FINAL_PROOFS_VERIFIED",
+  "rulebook": {
+    "expected": {
+      "id": "clausegate-canonical-20260816",
+      "title": "Public Demo Integrity Rules",
+      "description": "A proposal is compliant only when it describes a real public software project that satisfies every requirement and violates none.",
+      "rules": "1. The project must have a working public demo.\n2. The source code must be publicly accessible under a permissive open-source license.\n3. The proposal must identify automated tests or another reproducible verification path.\n4. The project must not include gambling, fraud, credential theft, or other intentionally deceptive behavior."
+    },
+    "txHash": "0xd0a0841935068ed33576b96ee55779fcbea4b965ab119904cb037b4b39728e3a",
+    "status": "VERIFIED",
+    "submittedAt": "2026-08-16T13:07:39.046Z",
+    "consensus": "AGREE",
+    "execution": "FINISHED_WITH_RETURN",
+    "postcondition": "verified: active canonical Rulebook returned by get_rulebook and ID present in get_rulebook_ids",
+    "updatedAt": "2026-08-16T14:00:00.000Z"
+  },
+  "compliant": {
+    "submit": {
+      "id": "clausegate-compliant-20260816",
+      "title": "ClauseGate public demo",
+      "proposalText": "The project is an open-source software project with a working public demo. Its source code is publicly accessible under an MIT license. It includes an automated test suite and a reproducible verification path. It contains no gambling, fraud, credential theft, or other intentionally deceptive behavior.",
+      "txHash": "0x7327a8d190087273ccd83225fbbc83264f712449a31b399ea55ff70e8c273b8d",
+      "status": "FINALIZED",
+      "broadcastAt": "2026-08-16T13:53:59.554Z",
+      "lastObserved": "ACCEPTED; finalization window not elapsed; no resend",
+      "consensus": "AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "postcondition": "verified: exact SUBMITTED submission"
+    },
+    "review": {
+      "txHash": "0xac0d127d3cfb29fe202d91851129bb77814ef21ba4f17c1d61aee0e07bd675bb",
+      "status": "FINALIZED",
+      "verdict": "COMPLIANT",
+      "broadcastAt": "2026-08-16T16:00:26.183Z",
+      "lastObserved": "ACCEPTED; execution FINISHED_WITH_RETURN; majority AGREE; 4 finished_with_return votes and 1 timeout; no resend",
+      "observedAt": "2026-08-16T16:01:10.542Z",
+      "consensus": "AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "certificate": "verified",
+      "digest": "dfa8197e73ebbf411afe3907ae9c8dcc64b0923fb1ce3ee33dd585a24af379c4",
+      "digestVerified": true,
+      "postcondition": "verified: REVIEWED COMPLIANT, certificate and independent digest match"
+    }
+  },
+  "noncompliant": {
+    "submit": {
+      "id": "clausegate-noncompliant-20260816",
+      "title": "Private football wagering app",
+      "proposalText": "The source code is private. A working demo is deployed. Users can wager tokens on football results.",
+      "txHash": "0xa1d9d88f6ec9a4d286cdd9fea429e4ba91fa1b12d81027c6ff6406ac8931f34d",
+      "status": "FINALIZED",
+      "broadcastAt": "2026-08-16T16:31:32.833Z",
+      "lastObserved": "ACCEPTED; execution FINISHED_WITH_RETURN; majority AGREE; no resend",
+      "observedAt": "2026-08-16T16:32:18.240Z",
+      "consensus": "AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "postcondition": "verified: exact SUBMITTED submission"
+    },
+    "review": {
+      "txHash": "0x8a0119082d0b69e1f5833b212d08cb84acf5fe5a09e088f31e560af1e41c30d7",
+      "status": "FINALIZED",
+      "verdict": "NON_COMPLIANT",
+      "broadcastAt": "2026-08-16T17:02:21.830Z",
+      "lastObserved": "ACCEPTED; execution FINISHED_WITH_RETURN; majority AGREE; 4 finished_with_return votes and 1 timeout; no resend",
+      "observedAt": "2026-08-16T17:03:12.645Z",
+      "consensus": "AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "certificateAbsent": true,
+      "digest": "",
+      "postcondition": "verified: REVIEWED NON_COMPLIANT, empty certificate and digest"
+    }
+  },
+  "frontend": {
+    "url": "https://clausegate.vercel.app",
+    "deploymentUrl": "https://clausegate-omufyvz0j-kolofahkelvin16-6437s-projects.vercel.app",
+    "deploymentId": "dpl_GNxg6Hpe6vaBUaaaYApiSPjNGaXQ",
+    "network": "GenLayer Bradbury Testnet",
+    "chainId": 4221,
+    "contractAddress": "0x49446d1e225Ba9821d38457DcdCAb31b2170c061",
+    "build": "passed",
+    "publicSmoke": "HTTP 200 for /, /rulebooks, Rulebook detail, /submissions, and both submission details; client-rendered labels not browser-verified because browser connector unavailable"
+  },
+  "finalizedAt": "2026-08-16T17:35:20.338Z"
+}

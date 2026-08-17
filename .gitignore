@@ -9,6 +9,8 @@
 *.sln
 *.sw?
 .env
+.env.local
+.env.*.local
 node_modules
 # Python bytecode
 __pycache__/
@@ -26,3 +28,11 @@ __pycache__/
 # The root package-lock.json is committed: CI uses `npm ci` for reproducible
 # installs across the frontend workspace. Only ignore nested/stray lockfiles.
 
+.vercel
+frontend-server.log
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+frontend/.vercel/
+*.pem
+*.key

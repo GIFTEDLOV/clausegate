@@ -1,0 +1,10 @@
+{
+  "rulebook_id": "clausegate-canonical-20260816",
+  "title": "Public Demo Integrity Rules",
+  "description": "A proposal is compliant only when it describes a real public software project that satisfies every requirement and violates none.",
+  "rules": "1. The project must have a working public demo.\n2. The source code must be publicly accessible under a permissive open-source license.\n3. The proposal must identify automated tests or another reproducible verification path.\n4. The project must not include gambling, fraud, credential theft, or other intentionally deceptive behavior.",
+  "tx_hash": "0xd0a0841935068ed33576b96ee55779fcbea4b965ab119904cb037b4b39728e3a",
+  "status": "VERIFIED",
+  "consensus": "AGREE",
+  "execution": "FINISHED_WITH_RETURN"
+}

@@ -14,4 +14,6 @@ Recorded from the verified CP0 environment on 2026-08-15:
 - installed Python packages: `genlayer-py 0.16.3`, `genlayer-test 0.29.2`, `genvm-linter 0.11.0`
 - cached direct-test GenVM standard library: `v0.2.16`
 
-The contract was linted and validated against the installed `genvm-lint` runner. The repository requirements file remains the upstream-compatible source of Python dependencies; the installed environment is recorded here for reproducibility evidence.
+The repository pins those three Git dependencies to immutable release commits
+in `requirements.txt`; the exact commit IDs are the source of truth. The
+contract was linted and validated against the installed `genvm-lint` runner.

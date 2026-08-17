@@ -81,7 +81,7 @@ async function reconcile(c, journal) {
   journal.updatedAt = nowIso();
   save(JOURNAL, journal);
   log(`Deploy VERIFIED. ClauseGate at ${v.address}`);
-  log(`Explorer: ${EXPLORER}/contracts/${v.address}`);
+  log(`Explorer: ${EXPLORER}/address/${v.address}`);
   return journal;
 }
 

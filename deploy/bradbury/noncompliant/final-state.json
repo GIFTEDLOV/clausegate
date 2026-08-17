@@ -1,0 +1,11 @@
+{
+  "submission_id": "clausegate-noncompliant-20260816",
+  "rulebook_id": "clausegate-canonical-20260816",
+  "title": "Private football wagering app",
+  "proposal_text": "The source code is private. A working demo is deployed. Users can wager tokens on football results.",
+  "status": "REVIEWED",
+  "verdict": "NON_COMPLIANT",
+  "certificate_issued": false,
+  "result_digest": "",
+  "certificate": null
+}

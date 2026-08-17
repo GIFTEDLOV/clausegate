@@ -5,13 +5,7 @@ import { ArrowRight, ArrowUpRight, Copy } from "lucide-react";
 import { useState } from "react";
 
 import { contractExplorerUrl, transactionExplorerUrl } from "@/lib/genlayer/explorer";
-
-const CONTRACT = "0x49446d1e225Ba9821d38457DcdCAb31b2170c061";
-const COMPLIANT_ID = "clausegate-compliant-20260816";
-const NONCOMPLIANT_ID = "clausegate-noncompliant-20260816";
-const COMPLIANT_REVIEW = "0xac0d127d3cfb29fe202d91851129bb77814ef21ba4f17c1d61aee0e07bd675bb";
-const NONCOMPLIANT_REVIEW = "0x8a0119082d0b69e1f5833b212d08cb84acf5fe5a09e088f31e560af1e41c30d7";
-const DEPLOYMENT_TX = "0xf368d4c9c188ccc5f5475b6dab9df7e88e3b2e6ec068e50ea8c33899e86d1c78";
+import { DEPLOYMENT } from "@/lib/config/deployment";
 
 const txHref = transactionExplorerUrl;
 
@@ -26,10 +20,10 @@ export function HeroConsensusField() {
             <stop offset="1" stopColor="#fff" stopOpacity=".8" />
           </linearGradient>
         </defs>
-        <path className="consensus-path" d="M-80 190 C260 80 520 610 850 380 C1020 265 1130 344 1510 270" />
-        <path className="consensus-path" d="M-80 430 C260 520 490 110 820 390 C1050 585 1125 354 1510 470" />
-        <path className="consensus-path" d="M-80 650 C240 520 520 260 810 420 C1050 550 1210 430 1510 610" />
-        <path className="consensus-path" stroke="url(#signal-line)" d="M-80 320 C250 250 490 390 760 420 C960 442 1040 423 1510 423" />
+        <path className="consensus-path" d="M0 190 C260 80 520 610 850 380 C1020 265 1130 344 1440 270" />
+        <path className="consensus-path" d="M0 430 C260 520 490 110 820 390 C1050 585 1125 354 1440 470" />
+        <path className="consensus-path" d="M0 650 C240 520 520 260 810 420 C1050 550 1210 430 1440 610" />
+        <path className="consensus-path" stroke="url(#signal-line)" d="M0 320 C250 250 490 390 760 420 C960 442 1040 423 1440 423" />
         <circle cx="824" cy="420" r="4" fill="#c9f36a" />
         <text className="consensus-label" x="720" y="350">RULEBOOK</text>
         <text className="consensus-label" x="940" y="505">CONSENSUS</text>
@@ -49,7 +43,7 @@ function Hero() {
           <p className="hero-copy">Publish the rules. Submit a proposal. Let independent GenLayer validators reach a verifiable compliance decision.</p>
           <div className="hero-actions">
             <Link href="/rulebooks" className="button-primary">Launch ClauseGate <ArrowRight size={16} /></Link>
-            <Link href={`/submissions/${COMPLIANT_ID}`} className="button-secondary">See a live decision</Link>
+            <Link href={`/submissions/${DEPLOYMENT.compliantSubmissionId}`} className="button-secondary">See a live decision</Link>
           </div>
         </div>
         <div className="hero-proof-strip"><strong>LIVE ON GENLAYER BRADBURY</strong><span>·</span><span>CONSENSUS VERIFIED</span><span>·</span><span>ONCHAIN CERTIFICATES</span></div>
@@ -73,8 +67,8 @@ function ProtocolDiagram() {
 }
 
 function LiveProofPanel({ compliant }: { compliant: boolean }) {
-  const id = compliant ? COMPLIANT_ID : NONCOMPLIANT_ID;
-  const review = compliant ? COMPLIANT_REVIEW : NONCOMPLIANT_REVIEW;
+  const id = compliant ? DEPLOYMENT.compliantSubmissionId : DEPLOYMENT.noncompliantSubmissionId;
+  const review = compliant ? DEPLOYMENT.compliantReviewTx : DEPLOYMENT.noncompliantReviewTx;
   return (
     <article className={`proof-panel ${compliant ? "proof-compliant" : "proof-non"}`}>
       <div className="proof-meta"><span className="eyebrow">{compliant ? "COMPLIANT" : "NON_COMPLIANT"}</span><span className="font-mono" style={{ color: "var(--muted)", fontSize: ".62rem" }}>FINALIZED · AGREE · FINISHED_WITH_RETURN</span></div>
@@ -89,7 +83,7 @@ function LiveProofPanel({ compliant }: { compliant: boolean }) {
 function Transparency() {
   const [copied, setCopied] = useState(false);
   const copyAddress = async () => {
-    await navigator.clipboard.writeText(CONTRACT);
+    await navigator.clipboard.writeText(DEPLOYMENT.contractAddress);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1400);
   };
@@ -99,11 +93,11 @@ function Transparency() {
         <div><p className="eyebrow">Transparency</p><h2 className="editorial-lead" style={{ marginTop: 20 }}>Built to be <em>inspected.</em></h2><div className="metrics"><div className="metric"><strong>GENLAYER</strong><span>Network</span></div><div className="metric"><strong>BRADBURY</strong><span>Production deployment</span></div><div className="metric"><strong>3</strong><span>Verdict states</span></div></div></div>
         <div>
           <div className="technical-panel">
-            <div className="technical-row"><span className="technical-label">Production contract</span><span className="technical-value">{CONTRACT}<button className="copy-button" type="button" onClick={copyAddress} aria-label="Copy production contract address"><Copy size={13} /> {copied ? "Copied" : "Copy"}</button></span></div>
+            <div className="technical-row"><span className="technical-label">Production contract</span><span className="technical-value">{DEPLOYMENT.contractAddress}<button className="copy-button" type="button" onClick={copyAddress} aria-label="Copy production contract address"><Copy size={13} /> {copied ? "Copied" : "Copy"}</button></span></div>
             <div className="technical-row"><span className="technical-label">Network</span><span className="technical-value">GenLayer Bradbury</span></div>
             <div className="technical-row"><span className="technical-label">Production frontend release</span><span className="technical-value">ClauseGate institutional frontend</span></div>
           </div>
-          <div className="technical-actions"><a href="https://github.com/GIFTEDLOV/clausegate" target="_blank" rel="noreferrer">View source <ArrowUpRight size={14} /></a><a href={contractExplorerUrl(CONTRACT)} target="_blank" rel="noreferrer">View contract <ArrowUpRight size={14} /></a><a href={transactionExplorerUrl(DEPLOYMENT_TX)} target="_blank" rel="noreferrer">View deployment <ArrowUpRight size={14} /></a></div>
+          <div className="technical-actions"><a href="https://github.com/GIFTEDLOV/clausegate" target="_blank" rel="noreferrer">View source <ArrowUpRight size={14} /></a><a href={contractExplorerUrl(DEPLOYMENT.contractAddress)} target="_blank" rel="noreferrer">View contract <ArrowUpRight size={14} /></a><a href={transactionExplorerUrl(DEPLOYMENT.deploymentTx)} target="_blank" rel="noreferrer">View deployment <ArrowUpRight size={14} /></a></div>
         </div>
       </div>
     </section>

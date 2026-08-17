@@ -6,11 +6,9 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { contractExplorerUrl, transactionExplorerUrl } from "@/lib/genlayer/explorer";
+import { DEPLOYMENT } from "@/lib/config/deployment";
 import { AccountPanel } from "./AccountPanel";
 import { Logo } from "./Logo";
-
-const CONTRACT = "0x49446d1e225Ba9821d38457DcdCAb31b2170c061";
-const DEPLOYMENT_TX = "0xf368d4c9c188ccc5f5475b6dab9df7e88e3b2e6ec068e50ea8c33899e86d1c78";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -77,8 +75,8 @@ export function Navbar() {
             {openMenu === "developers" && (
               <div className="nav-sheet nav-sheet-right" role="menu">
                 <a href="https://github.com/GIFTEDLOV/clausegate" target="_blank" rel="noreferrer"><strong>GitHub <ArrowUpRight size={13} /></strong><span>Inspect the source and release.</span></a>
-                <a href={contractExplorerUrl(CONTRACT)} target="_blank" rel="noreferrer"><strong>Contract <ArrowUpRight size={13} /></strong><span>View the production Intelligent Contract.</span></a>
-                <a href={transactionExplorerUrl(DEPLOYMENT_TX)} target="_blank" rel="noreferrer"><strong>Deployment transaction <ArrowUpRight size={13} /></strong><span>Open the verified Bradbury deployment transaction.</span></a>
+                <a href={contractExplorerUrl(DEPLOYMENT.contractAddress)} target="_blank" rel="noreferrer"><strong>Contract <ArrowUpRight size={13} /></strong><span>View the production Intelligent Contract.</span></a>
+                <a href={transactionExplorerUrl(DEPLOYMENT.deploymentTx)} target="_blank" rel="noreferrer"><strong>Deployment transaction <ArrowUpRight size={13} /></strong><span>Open the verified Bradbury deployment transaction.</span></a>
                 <a href="https://www.genlayer.com" target="_blank" rel="noreferrer"><strong>GenLayer <ArrowUpRight size={13} /></strong><span>Learn about the consensus network.</span></a>
               </div>
             )}
@@ -105,7 +103,7 @@ export function Navbar() {
             <Link href="/#security" onClick={closeMobile}>Security <span>↓</span></Link>
             <span className="eyebrow mobile-nav-developers">Developers</span>
             <a href="https://github.com/GIFTEDLOV/clausegate" target="_blank" rel="noreferrer">GitHub <span>↗</span></a>
-            <a href={contractExplorerUrl(CONTRACT)} target="_blank" rel="noreferrer">Contract <span>↗</span></a>
+            <a href={contractExplorerUrl(DEPLOYMENT.contractAddress)} target="_blank" rel="noreferrer">Contract <span>↗</span></a>
           </div>
           <Link className="button-primary mobile-launch" href="/rulebooks" onClick={closeMobile}>Launch App <span>→</span></Link>
         </div>
