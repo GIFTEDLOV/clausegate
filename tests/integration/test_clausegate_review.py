@@ -27,7 +27,7 @@ CONTROLLED_EVIDENCE = [
         "claim": "The source repository is publicly accessible.",
     }
 ]
-CONTROLLED_COMMITMENT = "dd5b3044fa5096a744b4ff6f1332ee53e9809b4f208bcbdb8170f654a58b119d"
+CONTROLLED_COMMITMENT = "0a7ee3f763af12422d0dc818b4aa202e6187c6e35163b118f266618d567a3ea0"
 
 
 def _canonical(value):
