@@ -18,4 +18,7 @@ export const DEPLOYMENT = {
   noncompliantReviewTx: "0x8a0119082d0b69e1f5833b212d08cb84acf5fe5a09e088f31e560af1e41c30d7",
   frontendUrl: "https://clausegate.vercel.app",
   hardenedReleaseCommit: "66f05ad5700f5b5446f776a653b04bc69b2190f0",
+  // Intentionally empty in production. Set NEXT_PUBLIC_CONTRACT_ADDRESS and
+  // NEXT_PUBLIC_CLAUSEGATE_CONTRACT_VERSION=2 only for a v2 test deployment.
+  candidateVersion: "2.0.0",
 } as const;

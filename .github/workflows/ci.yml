@@ -30,6 +30,9 @@ jobs:
       - name: GenVM lint
         run: genvm-lint check contracts/clausegate.py
 
+      - name: GenVM lint v2 candidate
+        run: genvm-lint check contracts/clausegate_v2.py
+
       - name: Prepare pinned direct-test GenVM runtime
         run: python -c "from gltest.direct.sdk_loader import download_artifacts; download_artifacts('v0.2.16')"
 

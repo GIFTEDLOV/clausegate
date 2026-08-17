@@ -15,7 +15,7 @@ from gltest.assertions import tx_execution_succeeded
 
 @pytest.mark.integration
 def test_clausegate_storage_and_views():
-    contract = get_contract_factory("ClauseGate").deploy(args=[])
+    contract = get_contract_factory("ClauseGateV2").deploy(args=[])
 
     assert contract.contract_info(args=[]).call()["name"] == "ClauseGate"
     assert contract.get_rulebook_ids(args=[]).call() == []
@@ -37,7 +37,7 @@ def test_clausegate_storage_and_views():
     assert contract.get_rulebook_ids(args=[]).call() == ["integration-rb"]
 
     submit = contract.submit_proposal(
-        args=["integration-submission", "integration-rb", "A proposal", "The proposal is text."]
+        args=["integration-submission", "integration-rb", "A proposal", "The proposal is text.", "[]"]
     ).transact()
     assert tx_execution_succeeded(submit)
 

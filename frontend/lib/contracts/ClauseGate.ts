@@ -1,10 +1,10 @@
 import { createClient } from "genlayer-js";
 import { TransactionStatus, type TransactionHash } from "genlayer-js/types";
 
-import { getEthereumProvider, getRpcUrl } from "@/lib/genlayer/client";
+import { getContractVersion, getEthereumProvider, getRpcUrl } from "@/lib/genlayer/client";
 import { BRADBURY_CHAIN } from "@/lib/genlayer/network";
 import { classify } from "@/lib/genlayer/classify";
-import { recomputeResultDigest } from "@/lib/genlayer/digest";
+import { canonicalJson, recomputeEvidenceAssessmentDigest, recomputeResultDigest, recomputeResultDigestV2 } from "@/lib/genlayer/digest";
 import {
   clearTransaction,
   getPendingTransaction,
@@ -19,6 +19,7 @@ import type {
   Submission,
   TransactionReceipt,
   WriteStage,
+  EvidenceReference,
 } from "./types";
 
 function normalize(value: unknown): unknown {
@@ -66,9 +67,11 @@ type Postcondition = () => Promise<boolean>;
 export class ClauseGate {
   private readonly address: `0x${string}`;
   private readonly client: any;
+  private readonly version: "1" | "2";
 
   constructor(contractAddress: string, account?: string | null) {
     this.address = contractAddress as `0x${string}`;
+    this.version = getContractVersion();
     this.client = createClient({
       chain: BRADBURY_CHAIN,
       endpoint: getRpcUrl(),
@@ -118,6 +121,10 @@ export class ClauseGate {
     return Object.keys(result || {}).length ? (result as unknown as ApprovalCertificate) : null;
   }
 
+  async getEvidenceAssessment(id: string) {
+    return (await this.read("get_evidence_assessment", [id])) as Submission["evidence_assessment"];
+  }
+
   async getContractInfo(): Promise<ContractInfo> {
     return (await this.read("contract_info")) as ContractInfo;
   }
@@ -164,7 +171,8 @@ export class ClauseGate {
           sub.status === "SUBMITTED" &&
           sub.verdict === "" &&
           sub.certificate_issued === false &&
-          ids.includes(expected.id)
+          ids.includes(expected.id) &&
+          (this.version === "1" || canonicalJson(sub.evidence || []) === canonicalJson(expected.evidence || []))
         );
       } catch {
         return false;
@@ -184,7 +192,14 @@ export class ClauseGate {
           if (!sub.certificate_issued || !sub.result_digest) return false;
           if (!cert || cert.verdict !== "COMPLIANT" || cert.result_digest !== sub.result_digest) return false;
           const rb = await this.getRulebook(sub.rulebook_id);
-          const recomputed = await recomputeResultDigest(rb, sub, "COMPLIANT");
+          const recomputed = this.version === "2"
+            ? await recomputeResultDigestV2(rb, sub, "COMPLIANT")
+            : await recomputeResultDigest(rb, sub, "COMPLIANT");
+          if (this.version === "2") {
+            if (cert.certificate_version !== "2" || !sub.evidence_commitment || !sub.evidence_assessment_digest) return false;
+            const assessmentDigest = await recomputeEvidenceAssessmentDigest(sub.evidence || [], sub.evidence_assessment || []);
+            if (assessmentDigest !== sub.evidence_assessment_digest || cert.evidence_assessment_digest !== assessmentDigest) return false;
+          }
           return recomputed === sub.result_digest;
         }
 
@@ -351,6 +366,7 @@ export class ClauseGate {
     rulebookId: string,
     title: string,
     proposalText: string,
+    evidence: EvidenceReference[] = [],
     onStage?: (stage: WriteStage) => void,
   ) {
     try {
@@ -375,6 +391,7 @@ export class ClauseGate {
           sub.status === "SUBMITTED" &&
           sub.verdict === "" &&
           sub.certificate_issued === false &&
+          (this.version === "1" || canonicalJson(sub.evidence || []) === canonicalJson(evidence)) &&
           ids.includes(id)
         );
       } catch {
@@ -382,13 +399,19 @@ export class ClauseGate {
       }
     };
 
+    if (this.version === "1" && evidence.length) {
+      throw new Error("The production v1 contract cannot accept evidence references. Enable the v2 test contract first.");
+    }
+    const args = this.version === "2"
+      ? [id, rulebookId, title, proposalText, JSON.stringify(evidence)]
+      : [id, rulebookId, title, proposalText];
     return this.writeWithRecovery(
       "submit-proposal",
       id,
       "submit_proposal",
-      [id, rulebookId, title, proposalText],
+      args,
       postcondition,
-      { kind: "submission", id, rulebookId, title, proposalText },
+      { kind: "submission", id, rulebookId, title, proposalText, evidence },
       onStage,
     );
   }
@@ -413,7 +436,14 @@ export class ClauseGate {
           if (!sub.certificate_issued || !sub.result_digest) return false;
           if (!cert || cert.verdict !== "COMPLIANT" || cert.result_digest !== sub.result_digest) return false;
           const rb = await this.getRulebook(sub.rulebook_id);
-          const recomputed = await recomputeResultDigest(rb, sub, "COMPLIANT");
+          const recomputed = this.version === "2"
+            ? await recomputeResultDigestV2(rb, sub, "COMPLIANT")
+            : await recomputeResultDigest(rb, sub, "COMPLIANT");
+          if (this.version === "2") {
+            if (cert.certificate_version !== "2" || !sub.evidence_commitment || !sub.evidence_assessment_digest) return false;
+            const assessmentDigest = await recomputeEvidenceAssessmentDigest(sub.evidence || [], sub.evidence_assessment || []);
+            if (assessmentDigest !== sub.evidence_assessment_digest || cert.evidence_assessment_digest !== assessmentDigest) return false;
+          }
           return recomputed === sub.result_digest;
         }
 

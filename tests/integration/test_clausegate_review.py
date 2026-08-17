@@ -42,7 +42,7 @@ UNCLEAR_PROPOSAL = "The project is ready for submission."
 
 def _deploy_with_rulebook():
     """Deploy a fresh contract and seed one rulebook; return (contract, rb_id)."""
-    contract = get_contract_factory("ClauseGate").deploy(args=[])
+    contract = get_contract_factory("ClauseGateV2").deploy(args=[])
     rulebook_id = f"rb-{uuid.uuid4().hex[:12]}"
     receipt = contract.create_rulebook(
         args=[rulebook_id, TITLE, DESCRIPTION, RULES]
@@ -54,7 +54,7 @@ def _deploy_with_rulebook():
 def _submit(contract, rulebook_id, proposal):
     submission_id = f"sub-{uuid.uuid4().hex[:12]}"
     receipt = contract.submit_proposal(
-        args=[submission_id, rulebook_id, "Submission", proposal]
+        args=[submission_id, rulebook_id, "Submission", proposal, "[]"]
     ).transact()
     assert tx_execution_succeeded(receipt)
     return submission_id

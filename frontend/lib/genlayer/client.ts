@@ -66,6 +66,11 @@ export function getContractAddress(): string {
   return address;
 }
 
+/** The production address is v1; v2 is opt-in through local/test configuration. */
+export function getContractVersion(): "1" | "2" {
+  return process.env.NEXT_PUBLIC_CLAUSEGATE_CONTRACT_VERSION === "2" ? "2" : "1";
+}
+
 /**
  * Check if MetaMask is installed
  */

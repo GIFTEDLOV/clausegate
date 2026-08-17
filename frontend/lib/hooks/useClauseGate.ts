@@ -85,7 +85,7 @@ export function useCertificates() {
   const error = submissions.error || certificateQueries.find((query) => query.error)?.error || null;
   const data = certificateQueries.flatMap((query, index) => {
     const certificate = query.data as ApprovalCertificate | null | undefined;
-    return certificate ? [{ submission: candidates[index], certificate }] : [];
+    return certificate?.certificate_version === "2" ? [{ submission: candidates[index], certificate }] : [];
   });
   return {
     data,

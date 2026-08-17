@@ -36,3 +36,6 @@ frontend/.env.*.local
 frontend/.vercel/
 *.pem
 *.key
+.clausegate-mutant.py
+.mutation-tmp/
+.mutation-results-cache.json

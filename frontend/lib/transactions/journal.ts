@@ -1,8 +1,9 @@
 import type { TransactionReceipt } from "@/lib/contracts/types";
+import type { EvidenceReference } from "@/lib/contracts/types";
 
 export type PendingExpected =
   | { kind: "rulebook"; id: string; title: string; description: string; rules: string }
-  | { kind: "submission"; id: string; rulebookId: string; title: string; proposalText: string }
+  | { kind: "submission"; id: string; rulebookId: string; title: string; proposalText: string; evidence?: EvidenceReference[] }
   | { kind: "review"; id: string };
 
 /**

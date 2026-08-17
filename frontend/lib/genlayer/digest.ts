@@ -7,7 +7,7 @@
  * COMPLIANT certificate against the committed content instead of trusting it.
  */
 
-import type { Rulebook, Submission } from "@/lib/contracts/types";
+import type { EvidenceAssessment, EvidenceReference, Rulebook, Submission } from "@/lib/contracts/types";
 
 function sortDeep(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(sortDeep);
@@ -56,4 +56,41 @@ export async function recomputeResultDigest(
     verdict,
   });
   return sha256Hex(payload);
+}
+
+export async function recomputeEvidenceAssessmentDigest(
+  evidence: EvidenceReference[],
+  assessment: EvidenceAssessment[],
+): Promise<string> {
+  return sha256Hex(canonicalJson({ evidence, assessment }));
+}
+
+/** Recompute the v2 result digest, including committed evidence and assessment. */
+export async function recomputeResultDigestV2(
+  rulebook: Rulebook,
+  submission: Submission,
+  verdict: string,
+): Promise<string> {
+  const evidence = submission.evidence || [];
+  const assessment = submission.evidence_assessment || [];
+  const assessmentDigest = submission.evidence_assessment_digest || await recomputeEvidenceAssessmentDigest(evidence, assessment);
+  return sha256Hex(canonicalJson({
+    rulebook: {
+      id: rulebook.rulebook_id,
+      title: rulebook.title,
+      description: rulebook.description,
+      rules: rulebook.rules,
+    },
+    submission: {
+      id: submission.submission_id,
+      submitter: submission.submitter,
+      title: submission.title,
+      proposal_text: submission.proposal_text,
+    },
+    evidence,
+    evidence_commitment: submission.evidence_commitment || "",
+    evidence_assessment: assessment,
+    evidence_assessment_digest: assessmentDigest,
+    verdict,
+  }));
 }
