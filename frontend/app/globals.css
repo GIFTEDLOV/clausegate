@@ -236,6 +236,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .evidence-card-head { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
 .evidence-claim { margin-top: 17px; color: #373a35; font-size: .88rem; line-height: 1.6; }
 .evidence-url { display: block; margin-top: 12px; color: var(--muted); font-size: .68rem; overflow-wrap: anywhere; }
+.control-status { margin-top: 10px; }
+.control-proof-panel { display: grid; gap: 13px; border: 1px solid var(--hairline); background: var(--canvas); padding: 18px; }
+.control-proof { display: grid; gap: 10px; border-top: 1px solid var(--hairline); padding-top: 15px; }
+.control-proof-json { max-height: 220px; overflow: auto; margin: 0; padding: 13px; background: #20231f; color: #e6eee4; font: .68rem/1.55 var(--font-mono), monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
 .evidence-url:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 .form-error { background: var(--noncompliant-soft); padding: 12px 14px; color: var(--noncompliant); font-size: .78rem; line-height: 1.5; }
 .form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; border-top: 1px solid var(--hairline); padding-top: 24px; }

@@ -21,7 +21,9 @@ const assertions = [
   ["frontend uses Bradbury RPC", /rpc-bradbury\.genlayer\.com/.test(read("lib/genlayer/network.ts"))],
   ["certificate data is read-only", !/reviewSubmission|submitProposal|createRulebook/.test(certificates)],
   ["submission form includes evidence", /Evidence/.test(submit) && /independently retrieve/.test(submit)],
+  ["submission form generates control proof", /controlAttestation/.test(submit) && /Copy control JSON/.test(submit) && /well-known\/clausegate\.json/.test(submit)],
   ["submission detail shows assessment statuses", /SUPPORTED/.test(submissionDetail) && /CONTRADICTED/.test(submissionDetail) && /INSUFFICIENT/.test(submissionDetail)],
+  ["submission detail shows control statuses", /entry\.control/.test(submissionDetail) && /VERIFIED/.test(submissionDetail) && /MISMATCH/.test(submissionDetail)],
   ["certificates page restricts v2", /certificate_version === ["']2["']/.test(hooks)],
 ];
 const failures = assertions.filter(([, ok]) => !ok).map(([name]) => name);

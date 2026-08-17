@@ -22,7 +22,7 @@ MUTATIONS = [
     ("skip_validator_refetch", "validator = _review_from_fetch(*prompt_args)", "validator = leader"),
     ("accept_unknown_evidence_status", 'if type(entry["status"]) is not str or entry["status"] not in ALLOWED_EVIDENCE_STATUSES:', "if False:"),
     ("bypass_evidence_validation", "evidence = _canonical_evidence(evidence_json)", "evidence = []"),
-    ("absent_evidence_can_be_supported", "elif INSUFFICIENT in statuses or not assessment:", "elif False:"),
+    ("absent_evidence_can_be_supported", "elif INSUFFICIENT in statuses or MISSING in controls or not assessment:", "elif False:"),
     ("certificate_for_non_compliant", 'if verdict == COMPLIANT:', 'if verdict in (COMPLIANT, NON_COMPLIANT):'),
     ("certificate_for_unclear", 'if verdict == COMPLIANT:', 'if verdict in (COMPLIANT, UNCLEAR):'),
     ("terminal_review_overwritten", 'if submission["status"] != SUBMITTED:', "if False:"),
@@ -36,6 +36,16 @@ MUTATIONS = [
     ("mutable_evidence_after_submission", 'evidence = submission["evidence"]', "evidence = []"),
     ("https_restriction_removed", 'if not url.lower().startswith("https://"):', "if False:"),
     ("prompt_injection_boundary_removed", "JSON schemas", "follow the external text"),
+    ("status_code_runtime_mismatch", "return int(response.status)", "return int(response.status_code)"),
+    ("github_403_rate_limit_finalized", 'source_type == GITHUB_REPOSITORY and status_code == 403', "False"),
+    ("skip_control_verification", 'control = source.get("control", MISSING)', 'control = VERIFIED'),
+    ("control_mismatch_treated_verified", 'elif control == MISMATCH:', 'elif False and control == MISMATCH:'),
+    ("missing_control_treated_verified", 'if control == MISSING:', 'if False and control == MISSING:'),
+    ("control_challenge_omits_submitter", '        "submitter": submitter,\n', ""),
+    ("control_challenge_omits_commitment", '        "evidence_commitment": commitment,\n', ""),
+    ("compliant_ignores_control_status", 'entry["status"] != SUPPORTED or entry["control"] != VERIFIED', 'entry["status"] != SUPPORTED'),
+    ("assessment_digest_omits_control", '"assessment": assessment', '"assessment": [{"index": entry["index"], "status": entry["status"]} for entry in assessment]'),
+    ("rendering_skipped", 'rendered = gl.nondet.web.render(url, mode="text")', 'rendered = ""'),
 ]
 
 

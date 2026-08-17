@@ -2,6 +2,7 @@ export type Verdict = "COMPLIANT" | "NON_COMPLIANT" | "UNCLEAR";
 export type SubmissionStatus = "SUBMITTED" | "REVIEWED";
 export type EvidenceType = "GITHUB_REPOSITORY" | "WEB_PAGE";
 export type EvidenceAssessmentStatus = "SUPPORTED" | "CONTRADICTED" | "INSUFFICIENT";
+export type ControlAssessmentStatus = "VERIFIED" | "MISSING" | "MISMATCH";
 
 export interface EvidenceReference {
   type: EvidenceType;
@@ -12,6 +13,7 @@ export interface EvidenceReference {
 export interface EvidenceAssessment {
   index: number;
   status: EvidenceAssessmentStatus;
+  control: ControlAssessmentStatus;
 }
 
 export interface Rulebook {

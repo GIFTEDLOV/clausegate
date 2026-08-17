@@ -140,8 +140,9 @@ Never commit `.env.local`, wallet material, or Vercel credentials.
 `contracts/clausegate_v2.py` implements the reviewer-requested trust-model
 upgrade without changing the v1 production address or Bradbury evidence. Its
 bounded schema supports `GITHUB_REPOSITORY` and `WEB_PAGE`, canonical HTTPS
-validation, evidence commitments, independent `gl.nondet.web.request` fetches,
-strict evidence assessments, transient-provider fail-closed behavior, and v2
+validation, evidence commitments, independently fetched source-control
+attestations, `gl.nondet.web.request` plus rendered `WEB_PAGE` content, strict
+evidence/control assessments, transient-provider fail-closed behavior, and v2
 certificate/digest binding. See [`docs/RELEASE-V2-PREP.md`](docs/RELEASE-V2-PREP.md)
 for the deployment-preparation record. No v2 address or transaction is claimed.
 
@@ -168,6 +169,14 @@ and responsive checks. Mandatory CI does not depend on live Bradbury availabilit
 and never holds a wallet or private key. The v1 and v2 sources are tested as
 separate candidates; no Bradbury write or production frontend repoint is part of
 this release-preparation pass.
+
+For a future v2 release, publish the generated exact control JSON at
+`.well-known/clausegate.json` on each cited first-party source. The v2 UI
+generates and copies these attestations; validators recompute the challenge
+from the wallet, submission, Rulebook, source URL, and evidence commitment.
+`npm run deploy:v2:selfcheck` checks the isolated recovery path offline;
+`npm run deploy:v2` requires an explicit deployment arming value and is not run
+as part of this candidate pass.
 
 ## Deployment and release history
 

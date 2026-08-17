@@ -1,0 +1,9 @@
+{
+  "schema": "clausegate-control-v1",
+  "submission_id": "v2-real-github-controlled",
+  "rulebook_id": "v2-real-public-repository",
+  "submitter": "0xeF3c34646049eAf74f7a0eDC4cce143a865085F5",
+  "source_url": "https://github.com/GIFTEDLOV/clausegate",
+  "evidence_commitment": "dd5b3044fa5096a744b4ff6f1332ee53e9809b4f208bcbdb8170f654a58b119d",
+  "control_digest": "38019a749b5e112a90dab78c058ff3e79a37a472390a63bebdf1c259ebf7a147"
+}

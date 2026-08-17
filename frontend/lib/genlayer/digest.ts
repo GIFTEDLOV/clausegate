@@ -34,6 +34,59 @@ export async function sha256Hex(text: string): Promise<string> {
     .join("");
 }
 
+export function canonicalizeEvidence(evidence: EvidenceReference[]): EvidenceReference[] {
+  return evidence.map((item) => {
+    const raw = item.url.trim();
+    const withoutFragment = raw.split("#", 1)[0];
+    const parsed = new URL(withoutFragment);
+    const host = parsed.hostname.toLowerCase().replace(/\.$/, "");
+    const path = parsed.pathname || "/";
+    const url = item.type === "GITHUB_REPOSITORY"
+      ? `https://github.com/${path.replace(/^\/+|\/+$/g, "").split("/").map((part) => part.toLowerCase()).join("/")}`
+      : `https://${host}${path}${parsed.search}`;
+    return { type: item.type, url, claim: item.claim.trim() };
+  });
+}
+
+export async function recomputeEvidenceCommitment(evidence: EvidenceReference[]): Promise<string> {
+  return sha256Hex(canonicalJson(canonicalizeEvidence(evidence)));
+}
+
+export interface ControlChallenge {
+  schema: "clausegate-control-v1";
+  submission_id: string;
+  rulebook_id: string;
+  submitter: string;
+  source_url: string;
+  evidence_commitment: string;
+}
+
+export async function controlAttestation(
+  submissionId: string,
+  rulebookId: string,
+  submitter: string,
+  sourceUrl: string,
+  evidenceCommitment: string,
+): Promise<ControlChallenge & { control_digest: string }> {
+  const payload: ControlChallenge = {
+    schema: "clausegate-control-v1",
+    submission_id: submissionId,
+    rulebook_id: rulebookId,
+    submitter,
+    source_url: sourceUrl,
+    evidence_commitment: evidenceCommitment,
+  };
+  return { ...payload, control_digest: await sha256Hex(canonicalJson(payload)) };
+}
+
+export function controlLocation(evidence: EvidenceReference): string {
+  if (evidence.type === "GITHUB_REPOSITORY") {
+    return ".well-known/clausegate.json on the repository default branch";
+  }
+  const url = new URL(evidence.url);
+  return `https://${url.hostname.toLowerCase()}/.well-known/clausegate.json`;
+}
+
 /** Recompute result_digest from committed rulebook + submission + verdict. */
 export async function recomputeResultDigest(
   rulebook: Rulebook,

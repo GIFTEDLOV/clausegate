@@ -4,7 +4,7 @@ import { TransactionStatus, type TransactionHash } from "genlayer-js/types";
 import { getContractVersion, getEthereumProvider, getRpcUrl } from "@/lib/genlayer/client";
 import { BRADBURY_CHAIN } from "@/lib/genlayer/network";
 import { classify } from "@/lib/genlayer/classify";
-import { canonicalJson, recomputeEvidenceAssessmentDigest, recomputeResultDigest, recomputeResultDigestV2 } from "@/lib/genlayer/digest";
+import { canonicalJson, recomputeEvidenceAssessmentDigest, recomputeEvidenceCommitment, recomputeResultDigest, recomputeResultDigestV2 } from "@/lib/genlayer/digest";
 import {
   clearTransaction,
   getPendingTransaction,
@@ -172,7 +172,12 @@ export class ClauseGate {
           sub.verdict === "" &&
           sub.certificate_issued === false &&
           ids.includes(expected.id) &&
-          (this.version === "1" || canonicalJson(sub.evidence || []) === canonicalJson(expected.evidence || []))
+          (this.version === "1" || (
+            canonicalJson(sub.evidence || []) === canonicalJson(expected.evidence || []) &&
+            sub.evidence_commitment === await recomputeEvidenceCommitment(expected.evidence || []) &&
+            Array.isArray(sub.evidence_assessment) && sub.evidence_assessment.length === 0 &&
+            sub.evidence_assessment_digest === ""
+          ))
         );
       } catch {
         return false;
@@ -197,6 +202,8 @@ export class ClauseGate {
             : await recomputeResultDigest(rb, sub, "COMPLIANT");
           if (this.version === "2") {
             if (cert.certificate_version !== "2" || !sub.evidence_commitment || !sub.evidence_assessment_digest) return false;
+            if ((sub.evidence_assessment || []).some((entry) => !["SUPPORTED", "CONTRADICTED", "INSUFFICIENT"].includes(entry.status) || !["VERIFIED", "MISSING", "MISMATCH"].includes(entry.control))) return false;
+            if ((sub.evidence_assessment || []).some((entry) => entry.status !== "SUPPORTED" || entry.control !== "VERIFIED")) return false;
             const assessmentDigest = await recomputeEvidenceAssessmentDigest(sub.evidence || [], sub.evidence_assessment || []);
             if (assessmentDigest !== sub.evidence_assessment_digest || cert.evidence_assessment_digest !== assessmentDigest) return false;
           }
@@ -392,6 +399,7 @@ export class ClauseGate {
           sub.verdict === "" &&
           sub.certificate_issued === false &&
           (this.version === "1" || canonicalJson(sub.evidence || []) === canonicalJson(evidence)) &&
+          (this.version === "1" || sub.evidence_commitment === await recomputeEvidenceCommitment(evidence)) &&
           ids.includes(id)
         );
       } catch {
@@ -441,6 +449,7 @@ export class ClauseGate {
             : await recomputeResultDigest(rb, sub, "COMPLIANT");
           if (this.version === "2") {
             if (cert.certificate_version !== "2" || !sub.evidence_commitment || !sub.evidence_assessment_digest) return false;
+            if ((sub.evidence_assessment || []).some((entry) => entry.status !== "SUPPORTED" || entry.control !== "VERIFIED")) return false;
             const assessmentDigest = await recomputeEvidenceAssessmentDigest(sub.evidence || [], sub.evidence_assessment || []);
             if (assessmentDigest !== sub.evidence_assessment_digest || cert.evidence_assessment_digest !== assessmentDigest) return false;
           }

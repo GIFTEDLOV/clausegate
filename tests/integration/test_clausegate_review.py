@@ -1,63 +1,90 @@
-"""Stage 5 multi-validator review proof against a live GenLayer network.
+"""Real GenVM v2 evidence/control integration cases.
 
-These tests exercise the only nondeterministic path -- review_submission --
-end to end through real leader + validator consensus and a real LLM. They are
-marked ``slow`` because they make live model calls and are nondeterministic;
-run them deliberately, paced to respect Studio rate limits:
+Run deliberately against hosted Studionet after the public integration
+attestation fixture is available on the repository default branch:
 
-    gltest tests/integration/test_clausegate_review.py -v -s -m slow --network studionet
+    gltest --network studionet tests/integration/test_clausegate_review.py -v -s -m integration
 
-The fixtures are the exact Stage 5 scenarios: a clearly COMPLIANT proposal, a
-clearly NON_COMPLIANT proposal, and a genuinely UNCLEAR proposal. The core
-security assertion is not merely the verdict but the certificate invariant:
-a certificate exists if and only if the committed verdict is COMPLIANT.
+These tests are intentionally separate from the frozen v1 evidence history.
 """
 
+import hashlib
+import json
 import uuid
 
 import pytest
 
-from gltest import get_contract_factory
-from gltest.assertions import tx_execution_succeeded, tx_execution_failed
+from gltest import get_contract_factory, get_default_account
+from gltest.assertions import tx_execution_succeeded
 
 
-RULES = (
-    "1. The submission must be open source.\n"
-    "2. It must include a working demo.\n"
-    "3. It must not contain gambling functionality."
-)
-DESCRIPTION = "Rules for the builder round."
-TITLE = "Hackathon Submission Rules"
-
-COMPLIANT_PROPOSAL = (
-    "The project is open source under MIT. A working demo is deployed. "
-    "The application has no betting, wagering, staking, or gambling functionality."
-)
-NON_COMPLIANT_PROPOSAL = (
-    "The source code is private. The application lets users wager tokens on "
-    "football results. A demo is deployed."
-)
-UNCLEAR_PROPOSAL = "The project is ready for submission."
+SENDER = "0xeF3c34646049eAf74f7a0eDC4cce143a865085F5"
+CONTROLLED_REPOSITORY = "https://github.com/GIFTEDLOV/clausegate"
+CONTROLLED_EVIDENCE = [
+    {
+        "type": "GITHUB_REPOSITORY",
+        "url": CONTROLLED_REPOSITORY,
+        "claim": "The source repository is publicly accessible.",
+    }
+]
+CONTROLLED_COMMITMENT = "dd5b3044fa5096a744b4ff6f1332ee53e9809b4f208bcbdb8170f654a58b119d"
 
 
-def _deploy_with_rulebook():
-    """Deploy a fresh contract and seed one rulebook; return (contract, rb_id)."""
+def _canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(",", ":"))
+
+
+def _sha(value):
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
+
+def _digest(rulebook, submission):
+    assessment = submission["evidence_assessment"]
+    assessment_digest = _sha(_canonical({"evidence": submission["evidence"], "assessment": assessment}))
+    return _sha(
+        _canonical(
+            {
+                "rulebook": {
+                    "id": rulebook["rulebook_id"],
+                    "title": rulebook["title"],
+                    "description": rulebook["description"],
+                    "rules": rulebook["rules"],
+                },
+                "submission": {
+                    "id": submission["submission_id"],
+                    "submitter": submission["submitter"],
+                    "title": submission["title"],
+                    "proposal_text": submission["proposal_text"],
+                },
+                "evidence": submission["evidence"],
+                "evidence_commitment": submission["evidence_commitment"],
+                "evidence_assessment": assessment,
+                "evidence_assessment_digest": assessment_digest,
+                "verdict": submission["verdict"],
+            }
+        )
+    )
+
+
+def _deploy_with_rulebook(rulebook_id):
     contract = get_contract_factory("ClauseGateV2").deploy(args=[])
-    rulebook_id = f"rb-{uuid.uuid4().hex[:12]}"
     receipt = contract.create_rulebook(
-        args=[rulebook_id, TITLE, DESCRIPTION, RULES]
+        args=[
+            rulebook_id,
+            "Public repository rule",
+            "A source repository must be publicly accessible.",
+            "The cited source repository must be publicly accessible.",
+        ]
     ).transact()
     assert tx_execution_succeeded(receipt)
-    return contract, rulebook_id
+    return contract
 
 
-def _submit(contract, rulebook_id, proposal):
-    submission_id = f"sub-{uuid.uuid4().hex[:12]}"
+def _submit(contract, submission_id, rulebook_id, evidence, proposal):
     receipt = contract.submit_proposal(
-        args=[submission_id, rulebook_id, "Submission", proposal, "[]"]
+        args=[submission_id, rulebook_id, "Integration submission", proposal, json.dumps(evidence)]
     ).transact()
     assert tx_execution_succeeded(receipt)
-    return submission_id
 
 
 def _review(contract, submission_id):
@@ -68,70 +95,96 @@ def _review(contract, submission_id):
 
 @pytest.mark.integration
 @pytest.mark.slow
-def test_stage5_compliant_issues_certificate():
-    contract, rulebook_id = _deploy_with_rulebook()
-    submission_id = _submit(contract, rulebook_id, COMPLIANT_PROPOSAL)
+def test_real_github_controlled_evidence_certifies_v2():
+    assert get_default_account().address.lower() == SENDER.lower()
+    rulebook_id = "v2-real-public-repository"
+    submission_id = "v2-real-github-controlled"
+    contract = _deploy_with_rulebook(rulebook_id)
+    _submit(contract, submission_id, rulebook_id, CONTROLLED_EVIDENCE, "The repository is public.")
 
     submission = _review(contract, submission_id)
     assert submission["status"] == "REVIEWED"
     assert submission["verdict"] == "COMPLIANT"
-    assert submission["certificate_issued"] is True
+    assert submission["evidence_assessment"] == [
+        {"index": 0, "status": "SUPPORTED", "control": "VERIFIED"}
+    ]
+    assert submission["evidence_commitment"] == CONTROLLED_COMMITMENT
 
     certificate = contract.get_certificate(args=[submission_id]).call()
-    assert certificate != {}
-    assert certificate["verdict"] == "COMPLIANT"
-    assert certificate["result_digest"] == submission["result_digest"]
-    assert submission["result_digest"] != ""
+    assert certificate["certificate_version"] == "2"
+    assert certificate["evidence_commitment"] == CONTROLLED_COMMITMENT
+    assert certificate["evidence_assessment_digest"] == _sha(
+        _canonical(
+            {
+                "evidence": submission["evidence"],
+                "assessment": submission["evidence_assessment"],
+            }
+        )
+    )
+    assert certificate["result_digest"] == _digest(
+        contract.get_rulebook(args=[rulebook_id]).call(), submission
+    )
 
 
 @pytest.mark.integration
 @pytest.mark.slow
-def test_stage5_non_compliant_has_no_certificate():
-    contract, rulebook_id = _deploy_with_rulebook()
-    submission_id = _submit(contract, rulebook_id, NON_COMPLIANT_PROPOSAL)
+def test_real_control_mismatch_cannot_certify():
+    rulebook_id = "v2-real-public-repository"
+    contract = _deploy_with_rulebook(rulebook_id)
+    submission_id = "v2-real-github-mismatch"
+    _submit(contract, submission_id, rulebook_id, CONTROLLED_EVIDENCE, "The repository is public.")
 
     submission = _review(contract, submission_id)
     assert submission["status"] == "REVIEWED"
-    assert submission["verdict"] == "NON_COMPLIANT"
+    assert submission["verdict"] != "COMPLIANT"
     assert submission["certificate_issued"] is False
-    assert submission["result_digest"] == ""
+    assert submission["evidence_assessment"][0]["control"] == "MISMATCH"
     assert contract.get_certificate(args=[submission_id]).call() == {}
 
 
 @pytest.mark.integration
 @pytest.mark.slow
-def test_stage5_unclear_has_no_certificate():
-    contract, rulebook_id = _deploy_with_rulebook()
-    submission_id = _submit(contract, rulebook_id, UNCLEAR_PROPOSAL)
+def test_real_missing_control_cannot_certify():
+    rulebook_id = "v2-real-missing-control"
+    contract = _deploy_with_rulebook(rulebook_id)
+    submission_id = f"v2-real-missing-{uuid.uuid4().hex[:8]}"
+    evidence = [
+        {
+            "type": "GITHUB_REPOSITORY",
+            "url": "https://github.com/torvalds/linux",
+            "claim": "The source repository is publicly accessible.",
+        }
+    ]
+    _submit(contract, submission_id, rulebook_id, evidence, "The repository is public.")
 
     submission = _review(contract, submission_id)
     assert submission["status"] == "REVIEWED"
-    assert submission["verdict"] == "UNCLEAR"
+    assert submission["verdict"] != "COMPLIANT"
     assert submission["certificate_issued"] is False
-    assert submission["result_digest"] == ""
+    assert submission["evidence_assessment"][0]["control"] == "MISSING"
     assert contract.get_certificate(args=[submission_id]).call() == {}
 
 
 @pytest.mark.integration
 @pytest.mark.slow
-def test_stage5_reviewed_submission_is_terminal():
-    """A committed REVIEWED verdict cannot be overwritten by a second review."""
-    contract, rulebook_id = _deploy_with_rulebook()
-    submission_id = _submit(contract, rulebook_id, COMPLIANT_PROPOSAL)
+def test_real_web_page_request_and_render_are_used():
+    rulebook_id = "v2-real-rendered-page"
+    contract = _deploy_with_rulebook(rulebook_id)
+    submission_id = f"v2-real-render-{uuid.uuid4().hex[:8]}"
+    evidence = [
+        {
+            "type": "WEB_PAGE",
+            "url": "https://clausegate.vercel.app",
+            "claim": "A live application is publicly reachable.",
+        }
+    ]
+    _submit(contract, submission_id, rulebook_id, evidence, "The application is live.")
 
-    first = _review(contract, submission_id)
-    assert first["status"] == "REVIEWED"
-    first_verdict = first["verdict"]
-    first_digest = first["result_digest"]
-
-    # Second review must fail closed; the committed state must be unchanged.
-    try:
-        second_receipt = contract.review_submission(args=[submission_id]).transact()
-        assert tx_execution_failed(second_receipt)
-    except Exception:
-        pass  # A hard revert surfacing as a client exception is also fail-closed.
-
-    after = contract.get_submission(args=[submission_id]).call()
-    assert after["status"] == "REVIEWED"
-    assert after["verdict"] == first_verdict
-    assert after["result_digest"] == first_digest
+    # A successful REVIEWED result proves request + render completed; the
+    # production origin has no test control attestation, so it cannot certify.
+    submission = _review(contract, submission_id)
+    assert submission["status"] == "REVIEWED"
+    assert submission["verdict"] != "COMPLIANT"
+    assert submission["certificate_issued"] is False
+    assert submission["evidence_assessment"][0]["control"] == "MISSING"
+    assert contract.get_certificate(args=[submission_id]).call() == {}

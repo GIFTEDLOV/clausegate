@@ -23,6 +23,9 @@ def test_v2_prompt_marks_all_external_content_untrusted():
 def test_v2_uses_documented_nondeterministic_web_request_and_independent_fetch():
     source = source_text()
     assert "gl.nondet.web.request" in source
+    assert "gl.nondet.web.render" in source
+    assert "response.status" in source
+    assert "response.status_code" not in source
     assert source.count("_review_from_fetch(*prompt_args)") >= 2
     assert "validator_fn" in source
     assert "return leader == validator" in source
@@ -36,6 +39,15 @@ def test_v2_has_bounded_https_evidence_and_v2_certificate_gates():
     assert "https://" in source
     assert '"certificate_version": "2"' in source
     assert 'if verdict == COMPLIANT:' in source
+    assert 'CONTROL_SCHEMA = "clausegate-control-v1"' in source
+    assert '"control": control' in source
+    assert 'CONTROL_FILE_PATH = "/.well-known/clausegate.json"' in source
+    assert 'control_url = _github_control_url(url, default_branch)' in source
+    assert 'control_url = _web_control_url(url)' in source
+    assert 'gl.nondet.web.render(url, mode="text")' in source
+    assert 'entry["status"] != SUPPORTED or entry["control"] != VERIFIED' in source
+    assert '"assessment": assessment' in source
+    assert source.count('entry["status"] not in ALLOWED_EVIDENCE_STATUSES') == 2
 
 
 def test_contract_has_no_node_local_clock_or_randomness():
