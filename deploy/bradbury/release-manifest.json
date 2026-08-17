@@ -30,8 +30,8 @@
   },
   "frontend": {
     "url": "https://clausegate.vercel.app",
-    "current_ui_release_commit": "3f420148fd30aded6bdc5823563a51eadb836ee8",
-    "current_deployment_id": "dpl_7FSWq83PFFPiJVEGWhXPKjNUdJcb"
+    "current_ui_release_commit": "434374b83fa3635a21fa7ae594c63ae1c086e7d2",
+    "current_deployment_id": "dpl_6DDEAXpfrZ1q9xWDjhGwpbZ8rgQo"
   },
   "rulebook": {
     "id": "clausegate-canonical-20260816",
