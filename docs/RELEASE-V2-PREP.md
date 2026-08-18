@@ -156,3 +156,22 @@ For future v2 changes, run the pinned GenLayer lint/direct,
 security, mutation, frontend, evidence, reproducibility, secret, and clean
 checkout gates. The live v2 deployment, two canonical proof cases, and public
 frontend release are recorded under `deploy/bradbury/v2/` and this document.
+
+## Public frontend release
+
+- Vercel project: `clausegate`
+- Vercel project ID: `prj_LpI0rCFEVlDRteIYQc6k3bToNzhD`
+- Production URL: [clausegate.vercel.app](https://clausegate.vercel.app)
+- Vercel deployment ID: `dpl_Acs1qPgkm5wRa9vrwBjVYcnGxknf`
+- Deployment target: `production`
+- Deployed frontend commit: `5a2e29b7d5b24a72550cbc028f8ae65cc472a369`
+- Production contract: `0x25F2c44F55b597B9124Af414F991F1aE68913dBa`
+- Contract deployment transaction: `0xc38a947835d3cfdfb6bc2f41dd7162824eadb21e03787fed153ccf1824efeac6`
+- v2 source SHA-256: `008a92aa6f081e0cb19c7279bde10c6ad96db4e00a071a769d194d24c48ee748`
+- CI: [run 32147941853](https://github.com/GIFTEDLOV/clausegate/actions/runs/32147941853)
+
+The production environment explicitly sets
+`NEXT_PUBLIC_CONTRACT_ADDRESS` to the v2 address and
+`NEXT_PUBLIC_CLAUSEGATE_CONTRACT_VERSION=2`. The Vercel deployment was made
+from the root-linked `clausegate` project; the nested `frontend` Vercel project
+is not a production target.
