@@ -66,9 +66,12 @@ export function getContractAddress(): string {
   return address;
 }
 
-/** The production address is v1; v2 is opt-in through local/test configuration. */
+/** The production frontend explicitly selects the reviewed v2 interface. */
 export function getContractVersion(): "1" | "2" {
-  return process.env.NEXT_PUBLIC_CLAUSEGATE_CONTRACT_VERSION === "2" ? "2" : "1";
+  const configured = process.env.NEXT_PUBLIC_CLAUSEGATE_CONTRACT_VERSION;
+  if (!configured || configured === "1") return "1";
+  if (configured === "2") return "2";
+  throw new Error(`Unsupported ClauseGate contract version: ${configured}`);
 }
 
 /**

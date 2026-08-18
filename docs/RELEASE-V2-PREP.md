@@ -1,9 +1,8 @@
 # ClauseGate v2 release and proof record
 
-This document records the reviewed v2 candidate and its separate Bradbury
-deployment/proofs. It does not alter the
-historical v1 release record in [`RELEASE.md`](RELEASE.md), the Bradbury
-manifest, proof artifacts, production address, or production frontend.
+This document records the reviewed v2 Bradbury deployment, canonical proofs, and
+the public frontend release. It does not alter the historical v1 release record
+in [`RELEASE.md`](RELEASE.md), the v1 Bradbury manifest, or v1 proof artifacts.
 
 ## Version boundary
 
@@ -11,10 +10,10 @@ manifest, proof artifacts, production address, or production frontend.
   `9bf75f5129d4f7b822f5d0ac57c44e176e708768`
 - v1 production contract:
   `0x49446d1e225Ba9821d38457DcdCAb31b2170c061`
-- v2 candidate source: `contracts/clausegate_v2.py`
+- v2 source: `contracts/clausegate_v2.py`
 - v2 contract name/version: `ClauseGate` / `2.0.0`
-- v2 candidate source SHA-256: `008a92aa6f081e0cb19c7279bde10c6ad96db4e00a071a769d194d24c48ee748`
-- v2 candidate source bytes: `35013` (LF-only)
+- v2 source SHA-256: `008a92aa6f081e0cb19c7279bde10c6ad96db4e00a071a769d194d24c48ee748`
+- v2 source bytes: `35013` (LF-only)
 - v2 address: `0x25F2c44F55b597B9124Af414F991F1aE68913dBa`
 - v2 deployment transaction: `0xc38a947835d3cfdfb6bc2f41dd7162824eadb21e03787fed153ccf1824efeac6`
 
@@ -136,10 +135,10 @@ certificates page lists only certificate version `2` responses. Historical v1
 certificates, when viewed directly, are labeled claim-based v1 and are not
 presented as evidence-bound approvals.
 
-V2 is opt-in for local/test configuration with
-`NEXT_PUBLIC_CLAUSEGATE_CONTRACT_VERSION=2` and a separately deployed candidate
-address. The production `NEXT_PUBLIC_CONTRACT_ADDRESS` remains v1, and no
-production frontend repoint is part of this preparation pass.
+The production frontend explicitly uses
+`NEXT_PUBLIC_CLAUSEGATE_CONTRACT_VERSION=2` and the verified v2 address on
+GenLayer Bradbury. Historical v1 certificates remain claim-based and are not
+represented as v2 evidence-bound approvals.
 
 The deployment path is isolated under `deploy/scripts/v2/` and
 `deploy/bradbury/v2/`. `npm run deploy:v2` refuses to run without the exact
@@ -155,6 +154,5 @@ attestation is preserved by commit SHA in `deploy/bradbury/v2/proof/`.
 
 For future v2 changes, run the pinned GenLayer lint/direct,
 security, mutation, frontend, evidence, reproducibility, secret, and clean
-checkout gates. The live v2 deployment and the two canonical proof cases are
-recorded under `deploy/bradbury/v2/`; production frontend configuration remains
-v1 until separately reviewed.
+checkout gates. The live v2 deployment, two canonical proof cases, and public
+frontend release are recorded under `deploy/bradbury/v2/` and this document.

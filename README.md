@@ -2,14 +2,13 @@
 
 ## Rules in. Decisions out.
 
-ClauseGate turns a published Rulebook and a submitted proposal into a finalized,
-consensus-backed compliance decision. The preserved production deployment is v1;
-the v2 candidate adds independently retrieved external evidence before factual
-certification.
+ClauseGate turns a published Rulebook, submitted proposal, and committed evidence
+references into a finalized, consensus-backed compliance decision. The public
+frontend is now configured for the reviewed v2 evidence-bound contract.
 
 - Live app: [clausegate.vercel.app](https://clausegate.vercel.app)
 - Network: GenLayer Bradbury
-- Production contract: [`0x49446d1e225Ba9821d38457DcdCAb31b2170c061`](https://explorer-bradbury.genlayer.com/address/0x49446d1e225Ba9821d38457DcdCAb31b2170c061)
+- Production contract v2: [`0x25F2c44F55b597B9124Af414F991F1aE68913dBa`](https://explorer-bradbury.genlayer.com/address/0x25F2c44F55b597B9124Af414F991F1aE68913dBa)
 - Source: [github.com/GIFTEDLOV/clausegate](https://github.com/GIFTEDLOV/clausegate)
 
 ## What ClauseGate is
@@ -47,8 +46,8 @@ There is no application database. On-chain ID collections provide enumeration.
 ## Contract API
 
 Both versions expose `create_rulebook`, `submit_proposal`, and `review_submission`.
-The v2 `submit_proposal` call adds `evidence_json`; v1 remains claim-based and
-unchanged at the production address.
+The v2 `submit_proposal` call adds `evidence_json`; v1 remains preserved as a
+historical claim-based release at its original address.
 Read methods are `get_rulebook`, `get_submission`, `get_certificate`,
 `get_rulebook_ids`, `get_submission_ids`, and `contract_info`.
 
@@ -89,20 +88,28 @@ not claim to prove every fact on the internet.
 
 ## Live Bradbury proof
 
-The preserved evidence records finalized, agreeing transactions with successful execution:
+The current public proof records are the v2 evidence-bound cases:
+
+### Current v2 proof table
+
+| Proof | Submission | Submit | Review | Result |
+| --- | --- | --- | --- | --- |
+| COMPLIANT | `v2-bradbury-compliant-20260818` | [transaction](https://explorer-bradbury.genlayer.com/tx/0xca86f7fb1402a8dc9d04f5360105207118e7e0616e7b80f94c873873c6f46bb8) | [transaction](https://explorer-bradbury.genlayer.com/tx/0xf729e293000cb2e34e53804e38689fb7589da3771b94e87af6a0b41d20c9976e) | certificate v2; SUPPORTED; control VERIFIED |
+| NON_COMPLIANT | `v2-bradbury-noncompliant-20260818` | [transaction](https://explorer-bradbury.genlayer.com/tx/0x8f75c66f6807c6b4a31ee43e4b4b53a541ade3b39022fb2a1224b6a1b0fd01f3) | [transaction](https://explorer-bradbury.genlayer.com/tx/0x4c96a49d3554ace74dcc2229dd931dfb087f2a592d204b2a0cd9e5792404a247) | certificate absent; CONTRADICTED; control VERIFIED |
+
+### Historical release context
 
 | Proof | Submission | Submit | Review | Result |
 | --- | --- | --- | --- | --- |
 | Canonical Rulebook | `clausegate-canonical-20260816` | — | [transaction](https://explorer-bradbury.genlayer.com/tx/0xd0a0841935068ed33576b96ee55779fcbea4b965ab119904cb037b4b39728e3a) | verified |
-| COMPLIANT | `clausegate-compliant-20260816` | [transaction](https://explorer-bradbury.genlayer.com/tx/0x7327a8d190087273ccd83225fbbc83264f712449a31b399ea55ff70e8c273b8d) | [transaction](https://explorer-bradbury.genlayer.com/tx/0xac0d127d3cfb29fe202d91851129bb77814ef21ba4f17c1d61aee0e07bd675bb) | certificate and digest verified |
-| NON_COMPLIANT | `clausegate-noncompliant-20260816` | [transaction](https://explorer-bradbury.genlayer.com/tx/0xa1d9d88f6ec9a4d286cdd9fea429e4ba91fa1b12d81027c6ff6406ac8931f34d) | [transaction](https://explorer-bradbury.genlayer.com/tx/0x8a0119082d0b69e1f5833b212d08cb84acf5fe5a09e088f31e560af1e41c30d7) | certificate absent |
+| COMPLIANT | `v2-bradbury-compliant-20260818` | [transaction](https://explorer-bradbury.genlayer.com/tx/0xca86f7fb1402a8dc9d04f5360105207118e7e0616e7b80f94c873873c6f46bb8) | [transaction](https://explorer-bradbury.genlayer.com/tx/0xf729e293000cb2e34e53804e38689fb7589da3771b94e87af6a0b41d20c9976e) | certificate v2; SUPPORTED; control VERIFIED |
+| NON_COMPLIANT | `v2-bradbury-noncompliant-20260818` | [transaction](https://explorer-bradbury.genlayer.com/tx/0x8f75c66f6807c6b4a31ee43e4b4b53a541ade3b39022fb2a1224b6a1b0fd01f3) | [transaction](https://explorer-bradbury.genlayer.com/tx/0x4c96a49d3554ace74dcc2229dd931dfb087f2a592d204b2a0cd9e5792404a247) | certificate absent; CONTRADICTED; control VERIFIED |
 
-These preserved records are v1 claim-based compliance artifacts. They are not
-v2 evidence-bound certificates and are not rewritten to suggest that external
-evidence was fetched. The v1 COMPLIANT proof is `FINALIZED + AGREE +
-FINISHED_WITH_RETURN`, with verdict `COMPLIANT`, a certificate, and an
-independently verified result digest. The v1 NON_COMPLIANT proof has the same
-finalized consensus/execution state, verdict `NON_COMPLIANT`, and no certificate.
+The original records remain preserved v1 claim-based compliance artifacts under
+`deploy/bradbury/`; they are not presented as v2 evidence-bound certificates.
+The v2 control-file history is preserved by the exact commits recorded in the
+proof manifest: `29242bc0c6f2f79b320c82c1204317415581188f` for COMPLIANT and
+`79627a37d2993712dd26a638a8826acdea90da0b` for NON_COMPLIANT.
 
 The separate v2 Bradbury deployment is
 `0x25F2c44F55b597B9124Af414F991F1aE68913dBa`. Its canonical evidence-bound
@@ -146,14 +153,13 @@ Never commit `.env.local`, wallet material, or Vercel credentials.
 ## v2 deployed release
 
 `contracts/clausegate_v2.py` implements the reviewer-requested trust-model
-upgrade without changing the v1 production address or Bradbury evidence. Its
+upgrade while preserving the v1 address and Bradbury evidence. Its
 bounded schema supports `GITHUB_REPOSITORY` and `WEB_PAGE`, canonical HTTPS
 validation, evidence commitments, independently fetched source-control
 attestations, `gl.nondet.web.request` plus rendered `WEB_PAGE` content, strict
 evidence/control assessments, transient-provider fail-closed behavior, and v2
 certificate/digest binding. See [`docs/RELEASE-V2-PREP.md`](docs/RELEASE-V2-PREP.md)
-for the source, deployment, and live-proof record. Production remains on the
-historical v1 address until a separately reviewed frontend repoint.
+for the source, deployment, live-proof, and production frontend release record.
 
 ## Tests and release gates
 
@@ -176,7 +182,8 @@ npm run test:shots
 The browser checks are read-only structural smoke, accessibility, console/request,
 and responsive checks. Mandatory CI does not depend on live Bradbury availability
 and never holds a wallet or private key. The v1 and v2 sources remain separate;
-the v2 deployment and proof evidence are isolated from the production frontend.
+the public frontend now points at the verified v2 contract while v1 evidence stays
+historical.
 
 For a v2 review, publish the generated exact control JSON at
 `.well-known/clausegate.json` on each cited first-party source. The v2 UI

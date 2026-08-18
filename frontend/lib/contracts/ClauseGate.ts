@@ -408,7 +408,7 @@ export class ClauseGate {
     };
 
     if (this.version === "1" && evidence.length) {
-      throw new Error("The production v1 contract cannot accept evidence references. Enable the v2 test contract first.");
+      throw new Error("The configured v1 contract cannot accept evidence references. Select the reviewed v2 contract before submitting evidence.");
     }
     const args = this.version === "2"
       ? [id, rulebookId, title, proposalText, JSON.stringify(evidence)]

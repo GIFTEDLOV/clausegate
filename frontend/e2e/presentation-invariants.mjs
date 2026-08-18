@@ -17,7 +17,7 @@ const assertions = [
   ["decision links use submission detail", /\/submissions\//.test(decisions)],
   ["explorer helper uses address route", /\/address\//.test(explorer)],
   ["explorer helper uses tx route", /\/tx\//.test(explorer)],
-  ["frontend uses Bradbury contract", /0x49446d1e225Ba9821d38457DcdCAb31b2170c061/.test(read("lib/config/deployment.ts"))],
+  ["frontend uses reviewed v2 Bradbury contract", /0x25F2c44F55b597B9124Af414F991F1aE68913dBa/.test(read("lib/config/deployment.ts"))],
   ["frontend uses Bradbury RPC", /rpc-bradbury\.genlayer\.com/.test(read("lib/genlayer/network.ts"))],
   ["certificate data is read-only", !/reviewSubmission|submitProposal|createRulebook/.test(certificates)],
   ["submission form includes evidence", /Evidence/.test(submit) && /independently retrieve/.test(submit)],
