@@ -13,9 +13,12 @@ export const EXPECTED_CHAIN_ID = 4221;
 export const RPC_URL = "https://rpc-bradbury.genlayer.com";
 export const EXPLORER = "https://explorer-bradbury.genlayer.com";
 export const EXPLORER_API = `${EXPLORER}/api/v1`;
-export const CONTRACT_PATH = resolve(ROOT, "contracts", "clausegate_v2.py");
+export const EXPECTED_V2_SOURCE_PATH = resolve(ROOT, "contracts", "clausegate_v2.py");
+export const CONTRACT_PATH = EXPECTED_V2_SOURCE_PATH;
 export const JOURNAL_PATH = resolve(ROOT, "deploy", "bradbury", "v2", "deployment.json");
 export const DEPLOY_CONFIRM = "DEPLOY_EVIDENCE_BOUND_V2";
+export const EXPECTED_V2_SOURCE_SHA256 = "008a92aa6f081e0cb19c7279bde10c6ad96db4e00a071a769d194d24c48ee748";
+export const EXPECTED_V2_SOURCE_BYTES = 35013;
 export const EXPECTED_CONTRACT_INFO = {
   name: "ClauseGate",
   version: "2.0.0",
@@ -35,6 +38,14 @@ export function sha256Utf8(text) { return createHash("sha256").update(Buffer.fro
 export function frozenSource() {
   const bytes = contractBytes();
   return { path: CONTRACT_PATH, sha256: sha256Bytes(bytes), bytes: bytes.length, hasCrlf: bytes.includes(0x0d) };
+}
+
+export function assertFrozenSource(frozen) {
+  if (CONTRACT_PATH !== EXPECTED_V2_SOURCE_PATH || frozen.path !== EXPECTED_V2_SOURCE_PATH) throw new Error("v2 source path differs from contracts/clausegate_v2.py");
+  if (frozen.sha256 !== EXPECTED_V2_SOURCE_SHA256) throw new Error(`v2 source SHA differs from reviewed candidate: ${frozen.sha256}`);
+  if (frozen.bytes !== EXPECTED_V2_SOURCE_BYTES) throw new Error(`v2 source byte count differs from reviewed candidate: ${frozen.bytes}`);
+  if (frozen.hasCrlf) throw new Error("v2 source contains CRLF");
+  return frozen;
 }
 
 function sortDeep(value) {
@@ -74,6 +85,43 @@ export function load(file) { if (!existsSync(file)) return null; try { return JS
 export function nowIso() { return new Date().toISOString(); }
 
 export function shouldReconcile(journal, frozenSha) { return Boolean(journal?.txHash && journal?.frozen?.sha256 === frozenSha); }
+
+const RETRYABLE = [
+  "pipeline backpressure",
+  "not currently accepting transactions",
+  "nonce too low",
+  "nonce is not consistent",
+  "replacement transaction underpriced",
+  "econnreset",
+  "etimedout",
+  "socket hang up",
+  "fetch failed",
+  "internal error",
+  "service unavailable",
+  "bad gateway",
+  "gateway timeout",
+];
+
+export function isRetryable(e) {
+  const message = `${e?.shortMessage ?? ""} ${e?.message ?? ""} ${e?.details ?? ""}`.toLowerCase();
+  return RETRYABLE.some((item) => message.includes(item));
+}
+
+export async function submitPreHash(submit, { attempts = 5, baseMs = 15_000, onRetry } = {}) {
+  let lastError;
+  for (let index = 0; index < attempts; index += 1) {
+    try {
+      return await submit();
+    } catch (error) {
+      lastError = error;
+      if (!isRetryable(error)) throw error;
+      const wait = Math.min(baseMs * 2 ** index, 120_000);
+      onRetry?.(index + 1, attempts, Math.round(wait / 1000), error?.shortMessage ?? error?.message ?? String(error));
+      await new Promise((resolveWait) => setTimeout(resolveWait, wait));
+    }
+  }
+  throw lastError;
+}
 export function up(value) { return typeof value === "string" && value ? value.toUpperCase() : "UNKNOWN"; }
 export function classify(receipt) {
   const consensus = up(receipt?.status_name ?? receipt?.statusName ?? receipt?.status);

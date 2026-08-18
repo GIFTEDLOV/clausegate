@@ -1,4 +1,4 @@
-import { DEPLOY_CONFIRM, CHAIN, EXPECTED_CHAIN_ID, EXPLORER, JOURNAL_PATH, contractBytes, frozenSource, isUnlocked, signer, client, tryReceipt, classify, load, nowIso, save, shouldReconcile } from "./lib.mjs";
+import { DEPLOY_CONFIRM, CHAIN, EXPECTED_CHAIN_ID, EXPLORER, JOURNAL_PATH, contractBytes, frozenSource, assertFrozenSource, isUnlocked, signer, client, tryReceipt, classify, load, nowIso, save, shouldReconcile, submitPreHash } from "./lib.mjs";
 import { verifyDeployment } from "./verify.mjs";
 
 if (process.env.CLAUSEGATE_V2_DEPLOY_CONFIRM !== DEPLOY_CONFIRM) {
@@ -27,8 +27,7 @@ async function reconcile(c, journal) {
 }
 
 async function main() {
-  const frozen = frozenSource();
-  if (frozen.hasCrlf) throw new Error("V2 source contains CRLF");
+  const frozen = assertFrozenSource(frozenSource());
   if (Number(CHAIN.id) !== EXPECTED_CHAIN_ID) throw new Error("V2 deployment chain mismatch");
   const prior = load(JOURNAL_PATH);
   if (shouldReconcile(prior, frozen.sha256)) return reconcile(await client(), prior);
@@ -38,7 +37,15 @@ async function main() {
   const c = await client(account);
   const journal = { stage: "PREPARED", contract: "ClauseGate", version: "2.0.0", network: CHAIN.name, chainId: Number(CHAIN.id), frozen, sourcePath: frozen.path, journalPath: JOURNAL_PATH, deployer: account.address, txHash: null, createdAt: nowIso() };
   save(JOURNAL_PATH, journal);
-  const txHash = await c.deployContract({ code: contractBytes(), args: [] });
+  try {
+    await c.initializeConsensusSmartContract().catch(() => {});
+  } catch {
+    /* already initialized on testnet */
+  }
+  const txHash = await submitPreHash(
+    () => c.deployContract({ code: contractBytes(), args: [] }),
+    { onRetry: (attempt, max, seconds, reason) => console.log(`v2 pre-hash retry ${attempt}/${max} in ${seconds}s: ${reason}`) },
+  );
   journal.txHash = txHash;
   journal.stage = "BROADCAST";
   journal.submittedAt = nowIso();
