@@ -26,21 +26,24 @@ export const EXPLORER = "https://explorer-bradbury.genlayer.com";
  *  and recorded with every deployment so a record names the SDK that produced it. */
 export const SDK_VERSION = "1.1.8";
 
-/** SHA-256 and byte length of contracts/clausegate.py over its canonical LF
- *  bytes (pinned by .gitattributes). Recorded with every deployment and checked
- *  against the on-chain code during materialization verification. */
+/** SHA-256 and byte length of the current production v2 source over its
+ * canonical LF bytes (pinned by .gitattributes). */
 export const CONTRACT_SOURCE_SHA256 =
-  "47817b41586e44ac1a08b2a5daff8b184a0f9c69e9f020d23cf43dce8d87810d";
-export const CONTRACT_SOURCE_BYTES = 12195;
+  "008a92aa6f081e0cb19c7279bde10c6ad96db4e00a071a769d194d24c48ee748";
+export const CONTRACT_SOURCE_BYTES = 35013;
 
 /** Expected identity returned by contract_info(), mirrored from the contract. */
 export const EXPECTED_CONTRACT_INFO = {
   name: "ClauseGate",
-  version: "1.0.0",
+  version: "2.0.0",
   tagline: "Rules in. Decisions out.",
   verdicts: ["COMPLIANT", "NON_COMPLIANT", "UNCLEAR"],
   max_rulebook_rules: 12_000,
   max_proposal: 16_000,
+  max_evidence_items: 4,
+  max_evidence_url: 500,
+  max_evidence_claim: 1000,
+  evidence_types: ["GITHUB_REPOSITORY", "WEB_PAGE"],
 } as const;
 
 function rpcOf(chain: unknown): string {
