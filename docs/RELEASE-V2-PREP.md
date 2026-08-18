@@ -162,9 +162,9 @@ frontend release are recorded under `deploy/bradbury/v2/` and this document.
 - Vercel project: `clausegate`
 - Vercel project ID: `prj_LpI0rCFEVlDRteIYQc6k3bToNzhD`
 - Production URL: [clausegate.vercel.app](https://clausegate.vercel.app)
-- Vercel deployment ID: `dpl_Acs1qPgkm5wRa9vrwBjVYcnGxknf`
+- Vercel deployment ID: `dpl_7dEWy8PhLK8rLNtiGqn3ANTM35aU`
 - Deployment target: `production`
-- Deployed frontend commit: `5a2e29b7d5b24a72550cbc028f8ae65cc472a369`
+- Deployed frontend commit: `bef418f8019e98123bdc4657ee3805d025d9802b`
 - Production contract: `0x25F2c44F55b597B9124Af414F991F1aE68913dBa`
 - Contract deployment transaction: `0xc38a947835d3cfdfb6bc2f41dd7162824eadb21e03787fed153ccf1824efeac6`
 - v2 source SHA-256: `008a92aa6f081e0cb19c7279bde10c6ad96db4e00a071a769d194d24c48ee748`
