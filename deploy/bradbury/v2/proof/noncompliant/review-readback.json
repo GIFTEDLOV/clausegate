@@ -1,0 +1,37 @@
+{
+  "submission": {
+    "certificate_issued": false,
+    "evidence": [
+      {
+        "claim": "The cited source repository is publicly accessible and licensed under MIT.",
+        "type": "GITHUB_REPOSITORY",
+        "url": "https://github.com/giftedlov/clausegate"
+      }
+    ],
+    "evidence_assessment": [
+      {
+        "control": "VERIFIED",
+        "index": 0,
+        "status": "CONTRADICTED"
+      }
+    ],
+    "evidence_assessment_digest": "",
+    "evidence_commitment": "5bd67addaf1a6766484e305a3b2d6ffd58d58f2ca8188ed02ece06d38c4dd006",
+    "proposal_text": "Evaluate the cited ClauseGate repository against the published private repository requirement.",
+    "result_digest": "",
+    "rulebook_id": "v2-bradbury-private-only-20260818",
+    "status": "REVIEWED",
+    "submission_id": "v2-bradbury-noncompliant-20260818",
+    "submitter": "0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7",
+    "title": "ClauseGate Against Private Repository Policy",
+    "verdict": "NON_COMPLIANT"
+  },
+  "evidence_assessment": [
+    {
+      "control": "VERIFIED",
+      "index": 0,
+      "status": "CONTRADICTED"
+    }
+  ],
+  "certificate": {}
+}

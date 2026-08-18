@@ -1,0 +1,87 @@
+{
+  "schema": "clausegate-v2-bradbury-proof-v1",
+  "generatedAt": "2026-08-18T11:02:36.081Z",
+  "network": "GenLayer Bradbury",
+  "chainId": 4221,
+  "contract": "0x25F2c44F55b597B9124Af414F991F1aE68913dBa",
+  "deployment_tx": "0xc38a947835d3cfdfb6bc2f41dd7162824eadb21e03787fed153ccf1824efeac6",
+  "source": {
+    "path": "contracts/clausegate_v2.py",
+    "sha256": "008a92aa6f081e0cb19c7279bde10c6ad96db4e00a071a769d194d24c48ee748",
+    "bytes": 35013
+  },
+  "proof_sender": {
+    "account": "player3",
+    "address": "0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7"
+  },
+  "compliant": {
+    "rulebook_id": "v2-bradbury-public-mit-20260818",
+    "rulebook_tx": "0x893e39765a4b514e266a254043f6e0c5ce97303d407d6ce6a7b08bb0829e59d7",
+    "submission_id": "v2-bradbury-compliant-20260818",
+    "submission_tx": "0xca86f7fb1402a8dc9d04f5360105207118e7e0616e7b80f94c873873c6f46bb8",
+    "control_file_commit_sha": "29242bc0c6f2f79b320c82c1204317415581188f",
+    "control_verified_at_review": {
+      "commit_sha": "29242bc0c6f2f79b320c82c1204317415581188f",
+      "raw_url": "https://raw.githubusercontent.com/giftedlov/clausegate/main/.well-known/clausegate.json",
+      "control_digest": "b60f0688f6cb6768186ef6a9014e12f4d73ba994a3e4c716deba6085e4bb6205",
+      "recordedAt": "2026-08-18T08:55:01.638Z"
+    },
+    "review_tx": "0xf729e293000cb2e34e53804e38689fb7589da3771b94e87af6a0b41d20c9976e",
+    "verdict": "COMPLIANT",
+    "assessment": [
+      {
+        "control": "VERIFIED",
+        "index": 0,
+        "status": "SUPPORTED"
+      }
+    ],
+    "certificate": {
+      "certificate_version": "2",
+      "evidence_assessment_digest": "f89af176f7ed204d930b96e0891cb3709c8850d3e570d553587baf2d8a13e5ec",
+      "evidence_commitment": "5bd67addaf1a6766484e305a3b2d6ffd58d58f2ca8188ed02ece06d38c4dd006",
+      "evidence_count": 1,
+      "result_digest": "ee19446a613f30706ab445e04bddf7294878889c4efb5d33363f29dd26d0bb24",
+      "rulebook_id": "v2-bradbury-public-mit-20260818",
+      "submission_id": "v2-bradbury-compliant-20260818",
+      "verdict": "COMPLIANT"
+    },
+    "evidence_commitment": "5bd67addaf1a6766484e305a3b2d6ffd58d58f2ca8188ed02ece06d38c4dd006",
+    "assessment_digest": "f89af176f7ed204d930b96e0891cb3709c8850d3e570d553587baf2d8a13e5ec",
+    "result_digest": "ee19446a613f30706ab445e04bddf7294878889c4efb5d33363f29dd26d0bb24",
+    "independent_digest_verification": {
+      "evidence_commitment": true,
+      "evidence_assessment_digest": true,
+      "result_digest": true
+    }
+  },
+  "noncompliant": {
+    "rulebook_id": "v2-bradbury-private-only-20260818",
+    "rulebook_tx": "0x17b0c67eb1a4e99eeea390d43b57facb80f1fc62d82dba19625ecdc01d0c8a3d",
+    "submission_id": "v2-bradbury-noncompliant-20260818",
+    "submission_tx": "0x8f75c66f6807c6b4a31ee43e4b4b53a541ade3b39022fb2a1224b6a1b0fd01f3",
+    "control_file_commit_sha": "79627a37d2993712dd26a638a8826acdea90da0b",
+    "control_verified_at_review": {
+      "commit_sha": "79627a37d2993712dd26a638a8826acdea90da0b",
+      "raw_url": "https://raw.githubusercontent.com/giftedlov/clausegate/main/.well-known/clausegate.json",
+      "control_digest": "3e7c88d5d5165e7d7817d542892d8ed21ebc25b552462d12f57525bbd4417d90",
+      "recordedAt": "2026-08-18T10:30:18.218Z",
+      "supersedes_compliant_commit_sha": "29242bc0c6f2f79b320c82c1204317415581188f"
+    },
+    "review_tx": "0x4c96a49d3554ace74dcc2229dd931dfb087f2a592d204b2a0cd9e5792404a247",
+    "verdict": "NON_COMPLIANT",
+    "assessment": [
+      {
+        "control": "VERIFIED",
+        "index": 0,
+        "status": "CONTRADICTED"
+      }
+    ],
+    "certificate": null,
+    "independent_verification": {
+      "evidence_commitment": true,
+      "assessment_control": true,
+      "certificate_absent": true,
+      "result_digest_empty": true
+    }
+  }
+}

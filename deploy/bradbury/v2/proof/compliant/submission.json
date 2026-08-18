@@ -1,0 +1,147 @@
+{
+  "stage": "VERIFIED",
+  "case": "compliant",
+  "action": "submission",
+  "method": "submit_proposal",
+  "args": [
+    "v2-bradbury-compliant-20260818",
+    "v2-bradbury-public-mit-20260818",
+    "ClauseGate Public MIT Repository",
+    "The ClauseGate project is distributed through the cited public GitHub repository under the MIT License.",
+    "[{\"type\":\"GITHUB_REPOSITORY\",\"url\":\"https://github.com/giftedlov/clausegate\",\"claim\":\"The cited source repository is publicly accessible and licensed under MIT.\"}]"
+  ],
+  "sourceContract": "0x25F2c44F55b597B9124Af414F991F1aE68913dBa",
+  "sender": "0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7",
+  "createdAt": "2026-08-18T08:23:40.610Z",
+  "txHash": "0xca86f7fb1402a8dc9d04f5360105207118e7e0616e7b80f94c873873c6f46bb8",
+  "submittedAt": "2026-08-18T08:23:42.646Z",
+  "receipt": {
+    "currentTimestamp": "1787043236",
+    "sender": "0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7",
+    "recipient": "0x25F2c44F55b597B9124Af414F991F1aE68913dBa",
+    "initialRotations": "3",
+    "txSlot": "2",
+    "createdTimestamp": "1787041421",
+    "lastVoteTimestamp": "1787041432",
+    "randomSeed": "0x28ab0bd60e185858a25fee69f54290e475a625836bfcb934d6c5f3b76830f3be",
+    "result": 1,
+    "txExecutionHash": "0xbc532434e148c17a2dac2e1ff24e225ec82e3812089b68d920878d1692f1e5c9",
+    "txCalldata": "0xf90193b9018f1604617267732df40176322d62726164627572792d636f6d706c69616e742d3230323630383138fc0176322d62726164627572792d7075626c69632d6d69742d32303236303831388402436c6175736547617465205075626c6963204d4954205265706f7369746f7279bc0654686520436c61757365476174652070726f6a656374206973206469737472696275746564207468726f75676820746865206369746564207075626c696320476974487562207265706f7369746f727920756e64657220746865204d4954204c6963656e73652e9c0a5b7b2274797065223a224749544855425f5245504f5349544f5259222c2275726c223a2268747470733a2f2f6769746875622e636f6d2f6769667465646c6f762f636c6175736567617465222c22636c61696d223a2254686520636974656420736f75726365207265706f7369746f7279206973207075626c69636c792061636365737369626c6520616e64206c6963656e73656420756e646572204d49542e227d5d066d6574686f647c7375626d69745f70726f706f73616c00",
+    "eqBlocksOutputs": "0xc786706164646564",
+    "messages": [],
+    "queueType": 0,
+    "queuePosition": "0",
+    "activator": "0x6CfA36a7b3416718240EeF02e81520e2d9A7C68C",
+    "lastLeader": "0x859dF0816Ed95B22B946C56dBc004b17993d1Ed6",
+    "status": 7,
+    "txId": "0xca86f7fb1402a8dc9d04f5360105207118e7e0616e7b80f94c873873c6f46bb8",
+    "readStateBlockRange": {
+      "activationBlock": "17968995",
+      "processingBlock": "17968999",
+      "proposalBlock": "17969003"
+    },
+    "numOfRounds": "0",
+    "lastRound": {
+      "round": "0",
+      "leaderIndex": "4",
+      "votesCommitted": "5",
+      "votesRevealed": "5",
+      "appealBond": "0",
+      "rotationsLeft": "3",
+      "result": 1,
+      "roundValidators": [
+        "0x2d012a292244C7ce6423a114d19109990923Af76",
+        "0x3f5cAED686336ED9cF3Dede61154B0Cd67Fb9bD7",
+        "0x3E1E6060f746c78DB2BE0909C30A1f6A41AcD011",
+        "0x58a7b7ac6Cb01843e4e5af117C551E59449E0F49",
+        "0x859dF0816Ed95B22B946C56dBc004b17993d1Ed6"
+      ],
+      "validatorVotes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "validatorVotesHash": [
+        "0x8310d571d1b95fc86b4c4531c7241ecb4feeabffbef932d68b7479c4466bebd1",
+        "0x326a33a2e2fc8f15db4e4e439616e747b7b2b86dcff50113835c71e3bc33e203",
+        "0xefbf78dc05dffeeb27daac45a726991b29c326f5a4eddf6c2659e7e743f42296",
+        "0xcf9a191a264c507d3cb7033455fb8fbf2480fe87748f072426d062b22aab02ce",
+        "0x22679c1f825d35b5360cd2d9336901a92d18598d303af535501dfa8990118484"
+      ],
+      "validatorResultHash": [
+        "0x0bd75bba50ecd1ba0c900b80ef1e2f4b78fa79cfd718de25aa2fc07b9704b333",
+        "0x0bd75bba50ecd1ba0c900b80ef1e2f4b78fa79cfd718de25aa2fc07b9704b333",
+        "0x0bd75bba50ecd1ba0c900b80ef1e2f4b78fa79cfd718de25aa2fc07b9704b333",
+        "0x0bd75bba50ecd1ba0c900b80ef1e2f4b78fa79cfd718de25aa2fc07b9704b333",
+        "0x0bd75bba50ecd1ba0c900b80ef1e2f4b78fa79cfd718de25aa2fc07b9704b333"
+      ],
+      "validatorVotesName": [
+        "AGREE",
+        "AGREE",
+        "AGREE",
+        "AGREE",
+        "AGREE"
+      ]
+    },
+    "consumedValidators": [
+      "0x2d012a292244C7ce6423a114d19109990923Af76",
+      "0x3f5cAED686336ED9cF3Dede61154B0Cd67Fb9bD7",
+      "0x3E1E6060f746c78DB2BE0909C30A1f6A41AcD011",
+      "0x58a7b7ac6Cb01843e4e5af117C551E59449E0F49",
+      "0x859dF0816Ed95B22B946C56dBc004b17993d1Ed6"
+    ],
+    "txExecutionResult": 1,
+    "txData": "0xf90193b9018f1604617267732df40176322d62726164627572792d636f6d706c69616e742d3230323630383138fc0176322d62726164627572792d7075626c69632d6d69742d32303236303831388402436c6175736547617465205075626c6963204d4954205265706f7369746f7279bc0654686520436c61757365476174652070726f6a656374206973206469737472696275746564207468726f75676820746865206369746564207075626c696320476974487562207265706f7369746f727920756e64657220746865204d4954204c6963656e73652e9c0a5b7b2274797065223a224749544855425f5245504f5349544f5259222c2275726c223a2268747470733a2f2f6769746875622e636f6d2f6769667465646c6f762f636c6175736567617465222c22636c61696d223a2254686520636974656420736f75726365207265706f7369746f7279206973207075626c69636c792061636365737369626c6520616e64206c6963656e73656420756e646572204d49542e227d5d066d6574686f647c7375626d69745f70726f706f73616c00",
+    "txDataDecoded": {
+      "callData": {},
+      "leaderOnly": false,
+      "type": "call"
+    },
+    "numOfInitialValidators": "3",
+    "statusName": "FINALIZED",
+    "resultName": "AGREE",
+    "txExecutionResultName": "FINISHED_WITH_RETURN"
+  },
+  "classification": {
+    "ok": true,
+    "consensus_status": "FINALIZED",
+    "consensus_result": "AGREE",
+    "execution_result": "FINISHED_WITH_RETURN",
+    "validator_votes": [
+      "AGREE",
+      "AGREE",
+      "AGREE",
+      "AGREE",
+      "AGREE"
+    ]
+  },
+  "readback": {
+    "submission": {
+      "certificate_issued": false,
+      "evidence": [
+        {
+          "claim": "The cited source repository is publicly accessible and licensed under MIT.",
+          "type": "GITHUB_REPOSITORY",
+          "url": "https://github.com/giftedlov/clausegate"
+        }
+      ],
+      "evidence_assessment": [],
+      "evidence_assessment_digest": "",
+      "evidence_commitment": "5bd67addaf1a6766484e305a3b2d6ffd58d58f2ca8188ed02ece06d38c4dd006",
+      "proposal_text": "The ClauseGate project is distributed through the cited public GitHub repository under the MIT License.",
+      "result_digest": "",
+      "rulebook_id": "v2-bradbury-public-mit-20260818",
+      "status": "SUBMITTED",
+      "submission_id": "v2-bradbury-compliant-20260818",
+      "submitter": "0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7",
+      "title": "ClauseGate Public MIT Repository",
+      "verdict": ""
+    },
+    "ids": [
+      "v2-bradbury-compliant-20260818"
+    ]
+  },
+  "updatedAt": "2026-08-18T08:53:58.114Z"
+}

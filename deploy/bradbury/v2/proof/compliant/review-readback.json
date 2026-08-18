@@ -1,0 +1,46 @@
+{
+  "submission": {
+    "certificate_issued": true,
+    "evidence": [
+      {
+        "claim": "The cited source repository is publicly accessible and licensed under MIT.",
+        "type": "GITHUB_REPOSITORY",
+        "url": "https://github.com/giftedlov/clausegate"
+      }
+    ],
+    "evidence_assessment": [
+      {
+        "control": "VERIFIED",
+        "index": 0,
+        "status": "SUPPORTED"
+      }
+    ],
+    "evidence_assessment_digest": "f89af176f7ed204d930b96e0891cb3709c8850d3e570d553587baf2d8a13e5ec",
+    "evidence_commitment": "5bd67addaf1a6766484e305a3b2d6ffd58d58f2ca8188ed02ece06d38c4dd006",
+    "proposal_text": "The ClauseGate project is distributed through the cited public GitHub repository under the MIT License.",
+    "result_digest": "ee19446a613f30706ab445e04bddf7294878889c4efb5d33363f29dd26d0bb24",
+    "rulebook_id": "v2-bradbury-public-mit-20260818",
+    "status": "REVIEWED",
+    "submission_id": "v2-bradbury-compliant-20260818",
+    "submitter": "0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7",
+    "title": "ClauseGate Public MIT Repository",
+    "verdict": "COMPLIANT"
+  },
+  "evidence_assessment": [
+    {
+      "control": "VERIFIED",
+      "index": 0,
+      "status": "SUPPORTED"
+    }
+  ],
+  "certificate": {
+    "certificate_version": "2",
+    "evidence_assessment_digest": "f89af176f7ed204d930b96e0891cb3709c8850d3e570d553587baf2d8a13e5ec",
+    "evidence_commitment": "5bd67addaf1a6766484e305a3b2d6ffd58d58f2ca8188ed02ece06d38c4dd006",
+    "evidence_count": 1,
+    "result_digest": "ee19446a613f30706ab445e04bddf7294878889c4efb5d33363f29dd26d0bb24",
+    "rulebook_id": "v2-bradbury-public-mit-20260818",
+    "submission_id": "v2-bradbury-compliant-20260818",
+    "verdict": "COMPLIANT"
+  }
+}

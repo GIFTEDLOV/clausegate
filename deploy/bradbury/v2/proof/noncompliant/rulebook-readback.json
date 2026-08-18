@@ -1,0 +1,14 @@
+{
+  "rulebook": {
+    "active": true,
+    "description": "A repository qualifies only if the cited source repository is not publicly accessible.",
+    "owner": "0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7",
+    "rulebook_id": "v2-bradbury-private-only-20260818",
+    "rules": "1. The cited source repository must not be publicly accessible.\n2. The decision must rely on the submitted authenticated evidence rather than unsupported submitter assertions.",
+    "title": "Private Repository Policy"
+  },
+  "ids": [
+    "v2-bradbury-public-mit-20260818",
+    "v2-bradbury-private-only-20260818"
+  ]
+}

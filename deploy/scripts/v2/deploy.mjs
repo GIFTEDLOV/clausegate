@@ -53,4 +53,4 @@ async function main() {
   return reconcile(c, journal);
 }
 
-main().then((journal) => { console.log(JSON.stringify(journal, null, 2)); process.exit(journal.stage === "VERIFIED" ? 0 : 1); }).catch((error) => { console.error(`v2 deploy error: ${error.message}`); process.exit(1); });
+main().then((journal) => { console.log(JSON.stringify(jsonSafe(journal), null, 2)); process.exit(journal.stage === "VERIFIED" ? 0 : 1); }).catch((error) => { console.error(`v2 deploy error: ${error.message}`); process.exit(1); });

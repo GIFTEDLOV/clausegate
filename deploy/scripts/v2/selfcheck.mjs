@@ -30,6 +30,7 @@ const deploySource = readFileSync(resolve(ROOT, "deploy", "scripts", "v2", "depl
 const initializeAt = deploySource.indexOf("initializeConsensusSmartContract");
 const deployAt = deploySource.indexOf("c.deployContract");
 check("arming guard", deploySource.includes("process.env.CLAUSEGATE_V2_DEPLOY_CONFIRM") && deploySource.includes("!== DEPLOY_CONFIRM") && deploySource.includes("DEPLOY_CONFIRM"), "exact opt-in");
+check("BigInt-safe final output", deploySource.includes("JSON.stringify(jsonSafe(journal)"), "jsonSafe final deployment output");
 check("consensus initialization before deploy", initializeAt >= 0 && deployAt > initializeAt, `${initializeAt} < ${deployAt}`);
 check("pre-hash guarded deployment", deploySource.includes("submitPreHash(") && deploySource.includes("() => c.deployContract"), "submitPreHash");
 check("hash-first persistence", deploySource.indexOf("journal.txHash = txHash") > deploySource.indexOf("submitPreHash(") && deploySource.includes("save(JOURNAL_PATH, journal)"), "persist returned hash");

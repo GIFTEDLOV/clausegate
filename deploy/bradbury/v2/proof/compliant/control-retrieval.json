@@ -1,0 +1,7 @@
+{
+  "url": "https://raw.githubusercontent.com/giftedlov/clausegate/main/.well-known/clausegate.json",
+  "status": 200,
+  "body": "{\n  \"schema\": \"clausegate-control-v1\",\n  \"submission_id\": \"v2-bradbury-compliant-20260818\",\n  \"rulebook_id\": \"v2-bradbury-public-mit-20260818\",\n  \"submitter\": \"0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7\",\n  \"source_url\": \"https://github.com/giftedlov/clausegate\",\n  \"evidence_commitment\": \"5bd67addaf1a6766484e305a3b2d6ffd58d58f2ca8188ed02ece06d38c4dd006\",\n  \"control_digest\": \"b60f0688f6cb6768186ef6a9014e12f4d73ba994a3e4c716deba6085e4bb6205\"\n}\n",
+  "exact_match": true,
+  "retrievedAt": "2026-08-18T08:55:12.664Z"
+}

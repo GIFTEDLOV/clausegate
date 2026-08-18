@@ -1,0 +1,163 @@
+{
+  "stage": "VERIFIED",
+  "case": "compliant",
+  "action": "review",
+  "method": "review_submission",
+  "args": [
+    "v2-bradbury-compliant-20260818"
+  ],
+  "sourceContract": "0x25F2c44F55b597B9124Af414F991F1aE68913dBa",
+  "sender": "0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7",
+  "createdAt": "2026-08-18T08:55:14.109Z",
+  "txHash": "0xf729e293000cb2e34e53804e38689fb7589da3771b94e87af6a0b41d20c9976e",
+  "submittedAt": "2026-08-18T08:55:16.013Z",
+  "receipt": {
+    "currentTimestamp": "1787045201",
+    "sender": "0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7",
+    "recipient": "0x25F2c44F55b597B9124Af414F991F1aE68913dBa",
+    "initialRotations": "3",
+    "txSlot": "3",
+    "createdTimestamp": "1787043315",
+    "lastVoteTimestamp": "1787043399",
+    "randomSeed": "0xb6531d17a519514e07a15d83cddb8fb89133d43b804185467c9e0cf1e214f44e",
+    "result": 1,
+    "txExecutionHash": "0x941055187f5dd64c5818b3b65a31dacc8d369b6163e4390d7550edf9f7a0c497",
+    "txCalldata": "0xf844b8411604617267730df40176322d62726164627572792d636f6d706c69616e742d3230323630383138066d6574686f648c017265766965775f7375626d697373696f6e00",
+    "eqBlocksOutputs": "0xf851b84800160865766964656e63650d1e07636f6e74726f6c44564552494649454405696e64657801067374617475734c535550504f5254454407766572646963744c434f4d504c49414e5486706164646564",
+    "messages": [],
+    "queueType": 0,
+    "queuePosition": "0",
+    "activator": "0x3f5cAED686336ED9cF3Dede61154B0Cd67Fb9bD7",
+    "lastLeader": "0x8E7765267023F88d4155d52F4ce2319aDDf1dc33",
+    "status": 7,
+    "txId": "0xf729e293000cb2e34e53804e38689fb7589da3771b94e87af6a0b41d20c9976e",
+    "readStateBlockRange": {
+      "activationBlock": "17971183",
+      "processingBlock": "17971222",
+      "proposalBlock": "17971223"
+    },
+    "numOfRounds": "0",
+    "lastRound": {
+      "round": "0",
+      "leaderIndex": "3",
+      "votesCommitted": "5",
+      "votesRevealed": "5",
+      "appealBond": "0",
+      "rotationsLeft": "3",
+      "result": 1,
+      "roundValidators": [
+        "0x859dF0816Ed95B22B946C56dBc004b17993d1Ed6",
+        "0x3f5cAED686336ED9cF3Dede61154B0Cd67Fb9bD7",
+        "0x4FC292d5D255Ec8Ad4cdcd36c5E188dfEE9D160e",
+        "0x8E7765267023F88d4155d52F4ce2319aDDf1dc33",
+        "0xE8fdefdfe18fD8E5B0d576b7CcfC5a29CE43fD7f"
+      ],
+      "validatorVotes": [
+        1,
+        3,
+        1,
+        1,
+        3
+      ],
+      "validatorVotesHash": [
+        "0xdfaf5b1cdf945cf5cbc9728a08d78f06b265fa289a40d5fa061a70f33ed980b1",
+        "0x7014802f1aa4a2664485035c8af6001237f515c5ba9a2d5d4de4bbf7250c3f56",
+        "0x6f7d472bbaba236182a1c145c306a4ee8fed53a43a39e48cca105659b48dfdd1",
+        "0x0dccb28f4df8813ef8fb8909e70d0c1bf821f44e1673bbed7d42548c6e95164b",
+        "0x7b533602dcbc0f426e1f6e872fa5b0beb14f9158f0b6233d8085013c149b3602"
+      ],
+      "validatorResultHash": [
+        "0x2382a4c428b44651b419400ff4ac606b1b250f9075541024d50cf25a31d06b8d",
+        "0x9fc8d2d92c2ea25ae2ac3d9b20370cb9cb1e53d073b5c1a20b03621ca750f8df",
+        "0x2382a4c428b44651b419400ff4ac606b1b250f9075541024d50cf25a31d06b8d",
+        "0x2382a4c428b44651b419400ff4ac606b1b250f9075541024d50cf25a31d06b8d",
+        "0x9fc8d2d92c2ea25ae2ac3d9b20370cb9cb1e53d073b5c1a20b03621ca750f8df"
+      ],
+      "validatorVotesName": [
+        "AGREE",
+        "TIMEOUT",
+        "AGREE",
+        "AGREE",
+        "TIMEOUT"
+      ]
+    },
+    "consumedValidators": [
+      "0x859dF0816Ed95B22B946C56dBc004b17993d1Ed6",
+      "0x3f5cAED686336ED9cF3Dede61154B0Cd67Fb9bD7",
+      "0x4FC292d5D255Ec8Ad4cdcd36c5E188dfEE9D160e",
+      "0x8E7765267023F88d4155d52F4ce2319aDDf1dc33",
+      "0xE8fdefdfe18fD8E5B0d576b7CcfC5a29CE43fD7f"
+    ],
+    "txExecutionResult": 1,
+    "txData": "0xf844b8411604617267730df40176322d62726164627572792d636f6d706c69616e742d3230323630383138066d6574686f648c017265766965775f7375626d697373696f6e00",
+    "txDataDecoded": {
+      "callData": {},
+      "leaderOnly": false,
+      "type": "call"
+    },
+    "numOfInitialValidators": "3",
+    "statusName": "FINALIZED",
+    "resultName": "AGREE",
+    "txExecutionResultName": "FINISHED_WITH_RETURN"
+  },
+  "classification": {
+    "ok": true,
+    "consensus_status": "FINALIZED",
+    "consensus_result": "AGREE",
+    "execution_result": "FINISHED_WITH_RETURN",
+    "validator_votes": [
+      "AGREE",
+      "TIMEOUT",
+      "AGREE",
+      "AGREE",
+      "TIMEOUT"
+    ]
+  },
+  "readback": {
+    "submission": {
+      "certificate_issued": true,
+      "evidence": [
+        {
+          "claim": "The cited source repository is publicly accessible and licensed under MIT.",
+          "type": "GITHUB_REPOSITORY",
+          "url": "https://github.com/giftedlov/clausegate"
+        }
+      ],
+      "evidence_assessment": [
+        {
+          "control": "VERIFIED",
+          "index": 0,
+          "status": "SUPPORTED"
+        }
+      ],
+      "evidence_assessment_digest": "f89af176f7ed204d930b96e0891cb3709c8850d3e570d553587baf2d8a13e5ec",
+      "evidence_commitment": "5bd67addaf1a6766484e305a3b2d6ffd58d58f2ca8188ed02ece06d38c4dd006",
+      "proposal_text": "The ClauseGate project is distributed through the cited public GitHub repository under the MIT License.",
+      "result_digest": "ee19446a613f30706ab445e04bddf7294878889c4efb5d33363f29dd26d0bb24",
+      "rulebook_id": "v2-bradbury-public-mit-20260818",
+      "status": "REVIEWED",
+      "submission_id": "v2-bradbury-compliant-20260818",
+      "submitter": "0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7",
+      "title": "ClauseGate Public MIT Repository",
+      "verdict": "COMPLIANT"
+    },
+    "evidence_assessment": [
+      {
+        "control": "VERIFIED",
+        "index": 0,
+        "status": "SUPPORTED"
+      }
+    ],
+    "certificate": {
+      "certificate_version": "2",
+      "evidence_assessment_digest": "f89af176f7ed204d930b96e0891cb3709c8850d3e570d553587baf2d8a13e5ec",
+      "evidence_commitment": "5bd67addaf1a6766484e305a3b2d6ffd58d58f2ca8188ed02ece06d38c4dd006",
+      "evidence_count": 1,
+      "result_digest": "ee19446a613f30706ab445e04bddf7294878889c4efb5d33363f29dd26d0bb24",
+      "rulebook_id": "v2-bradbury-public-mit-20260818",
+      "submission_id": "v2-bradbury-compliant-20260818",
+      "verdict": "COMPLIANT"
+    }
+  },
+  "updatedAt": "2026-08-18T09:26:45.071Z"
+}

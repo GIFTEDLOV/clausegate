@@ -1,6 +1,7 @@
-# ClauseGate v2 release preparation
+# ClauseGate v2 release and proof record
 
-This document describes the un-deployed v2 candidate. It does not alter the
+This document records the reviewed v2 candidate and its separate Bradbury
+deployment/proofs. It does not alter the
 historical v1 release record in [`RELEASE.md`](RELEASE.md), the Bradbury
 manifest, proof artifacts, production address, or production frontend.
 
@@ -14,7 +15,8 @@ manifest, proof artifacts, production address, or production frontend.
 - v2 contract name/version: `ClauseGate` / `2.0.0`
 - v2 candidate source SHA-256: `008a92aa6f081e0cb19c7279bde10c6ad96db4e00a071a769d194d24c48ee748`
 - v2 candidate source bytes: `35013` (LF-only)
-- v2 address: not deployed
+- v2 address: `0x25F2c44F55b597B9124Af414F991F1aE68913dBa`
+- v2 deployment transaction: `0xc38a947835d3cfdfb6bc2f41dd7162824eadb21e03787fed153ccf1824efeac6`
 
 V1 is consensus interpretation of committed proposal claims. V2 is
 evidence-aware compliance: validators independently retrieve committed evidence
@@ -144,14 +146,15 @@ The deployment path is isolated under `deploy/scripts/v2/` and
 arming value `CLAUSEGATE_V2_DEPLOY_CONFIRM=DEPLOY_EVIDENCE_BOUND_V2`.
 `npm run deploy:v2:selfcheck` is offline and requires no wallet.
 
-The repository-root `.well-known/clausegate.json` is a public, test-only
-Studionet integration fixture. It is not a production approval or a claim of
-legal ownership; it binds only the fixed integration submission to the public
-test sender used by the real web-access test.
+The repository-root `.well-known/clausegate.json` is the current public control
+attestation used by the canonical noncompliant Bradbury proof. Its prior
+Studionet fixture remains inspectable in Git history; the compliant Bradbury
+attestation is preserved by commit SHA in `deploy/bradbury/v2/proof/`.
 
 ## Deployment gate
 
-Before a future v2 deployment review, run the pinned GenLayer lint/direct,
+For future v2 changes, run the pinned GenLayer lint/direct,
 security, mutation, frontend, evidence, reproducibility, secret, and clean
-checkout gates. This preparation pass sends no Bradbury writes, runs no live
-proofs, and fabricates no v2 transaction or address.
+checkout gates. The live v2 deployment and the two canonical proof cases are
+recorded under `deploy/bradbury/v2/`; production frontend configuration remains
+v1 until separately reviewed.

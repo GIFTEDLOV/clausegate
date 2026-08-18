@@ -1,0 +1,154 @@
+{
+  "stage": "VERIFIED",
+  "case": "noncompliant",
+  "action": "review",
+  "method": "review_submission",
+  "args": [
+    "v2-bradbury-noncompliant-20260818"
+  ],
+  "sourceContract": "0x25F2c44F55b597B9124Af414F991F1aE68913dBa",
+  "sender": "0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7",
+  "createdAt": "2026-08-18T10:30:28.175Z",
+  "txHash": "0x4c96a49d3554ace74dcc2229dd931dfb087f2a592d204b2a0cd9e5792404a247",
+  "submittedAt": "2026-08-18T10:30:30.500Z",
+  "receipt": {
+    "currentTimestamp": "1787050910",
+    "sender": "0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7",
+    "recipient": "0x25F2c44F55b597B9124Af414F991F1aE68913dBa",
+    "initialRotations": "3",
+    "txSlot": "6",
+    "createdTimestamp": "1787049029",
+    "lastVoteTimestamp": "1787049048",
+    "randomSeed": "0xad9a711550fda2e37a63894f128a47054274502a396c94f828fb2f2e5b9a87ff",
+    "result": 1,
+    "txExecutionHash": "0x7f14e19603f9a90cdd90468f3ab681c5ee2fe6c0a60d81318790e36d140b9c5a",
+    "txCalldata": "0xf847b8441604617267730d8c0276322d62726164627572792d6e6f6e636f6d706c69616e742d3230323630383138066d6574686f648c017265766965775f7375626d697373696f6e00",
+    "eqBlocksOutputs": "0xf858b84f00160865766964656e63650d1e07636f6e74726f6c44564552494649454405696e646578010673746174757364434f4e54524144494354454407766572646963746c4e4f4e5f434f4d504c49414e5486706164646564",
+    "messages": [],
+    "queueType": 0,
+    "queuePosition": "0",
+    "activator": "0x3B940A5b4A762583453D9e9Cf0981BE0426A8e79",
+    "lastLeader": "0x96298d411a2D622945BEACa6112374583b501d52",
+    "status": 7,
+    "txId": "0x4c96a49d3554ace74dcc2229dd931dfb087f2a592d204b2a0cd9e5792404a247",
+    "readStateBlockRange": {
+      "activationBlock": "17977781",
+      "processingBlock": "17977783",
+      "proposalBlock": "17977784"
+    },
+    "numOfRounds": "0",
+    "lastRound": {
+      "round": "0",
+      "leaderIndex": "1",
+      "votesCommitted": "5",
+      "votesRevealed": "5",
+      "appealBond": "0",
+      "rotationsLeft": "3",
+      "result": 1,
+      "roundValidators": [
+        "0x2d012a292244C7ce6423a114d19109990923Af76",
+        "0x96298d411a2D622945BEACa6112374583b501d52",
+        "0x859dF0816Ed95B22B946C56dBc004b17993d1Ed6",
+        "0x58a7b7ac6Cb01843e4e5af117C551E59449E0F49",
+        "0x470AAa7DE37ff3E1C2b38eD9096263ca0d541F21"
+      ],
+      "validatorVotes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "validatorVotesHash": [
+        "0x646b692b79bf45a9b93bd74ccdd507ecad972343a2e48f18de47923a583de4fa",
+        "0x427a00cba0a912f35260a0fabe60aad98a8156c07ad0f66c1c28ed737dbbacb6",
+        "0x850571157f56e09fc399149f2ec9085bc00c402bd89fbcf5d48698b7d2b56e2c",
+        "0x783d32364729c276b44a180f3e595ff109f5443c6b0e56fe44eef29bd2df501d",
+        "0xd994b3df64bbe6924d740b1d7a1f75778074db9c0e9eb2864df56b3ae66aedeb"
+      ],
+      "validatorResultHash": [
+        "0xaf16d109bbb2c6cc317f9b039d1f6511f005fdbf33432bcaf9632e5f22c2c9f6",
+        "0xaf16d109bbb2c6cc317f9b039d1f6511f005fdbf33432bcaf9632e5f22c2c9f6",
+        "0xaf16d109bbb2c6cc317f9b039d1f6511f005fdbf33432bcaf9632e5f22c2c9f6",
+        "0xaf16d109bbb2c6cc317f9b039d1f6511f005fdbf33432bcaf9632e5f22c2c9f6",
+        "0xaf16d109bbb2c6cc317f9b039d1f6511f005fdbf33432bcaf9632e5f22c2c9f6"
+      ],
+      "validatorVotesName": [
+        "AGREE",
+        "AGREE",
+        "AGREE",
+        "AGREE",
+        "AGREE"
+      ]
+    },
+    "consumedValidators": [
+      "0x2d012a292244C7ce6423a114d19109990923Af76",
+      "0x96298d411a2D622945BEACa6112374583b501d52",
+      "0x859dF0816Ed95B22B946C56dBc004b17993d1Ed6",
+      "0x58a7b7ac6Cb01843e4e5af117C551E59449E0F49",
+      "0x470AAa7DE37ff3E1C2b38eD9096263ca0d541F21"
+    ],
+    "txExecutionResult": 1,
+    "txData": "0xf847b8441604617267730d8c0276322d62726164627572792d6e6f6e636f6d706c69616e742d3230323630383138066d6574686f648c017265766965775f7375626d697373696f6e00",
+    "txDataDecoded": {
+      "callData": {},
+      "leaderOnly": false,
+      "type": "call"
+    },
+    "numOfInitialValidators": "3",
+    "statusName": "FINALIZED",
+    "resultName": "AGREE",
+    "txExecutionResultName": "FINISHED_WITH_RETURN"
+  },
+  "classification": {
+    "ok": true,
+    "consensus_status": "FINALIZED",
+    "consensus_result": "AGREE",
+    "execution_result": "FINISHED_WITH_RETURN",
+    "validator_votes": [
+      "AGREE",
+      "AGREE",
+      "AGREE",
+      "AGREE",
+      "AGREE"
+    ]
+  },
+  "readback": {
+    "submission": {
+      "certificate_issued": false,
+      "evidence": [
+        {
+          "claim": "The cited source repository is publicly accessible and licensed under MIT.",
+          "type": "GITHUB_REPOSITORY",
+          "url": "https://github.com/giftedlov/clausegate"
+        }
+      ],
+      "evidence_assessment": [
+        {
+          "control": "VERIFIED",
+          "index": 0,
+          "status": "CONTRADICTED"
+        }
+      ],
+      "evidence_assessment_digest": "",
+      "evidence_commitment": "5bd67addaf1a6766484e305a3b2d6ffd58d58f2ca8188ed02ece06d38c4dd006",
+      "proposal_text": "Evaluate the cited ClauseGate repository against the published private repository requirement.",
+      "result_digest": "",
+      "rulebook_id": "v2-bradbury-private-only-20260818",
+      "status": "REVIEWED",
+      "submission_id": "v2-bradbury-noncompliant-20260818",
+      "submitter": "0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7",
+      "title": "ClauseGate Against Private Repository Policy",
+      "verdict": "NON_COMPLIANT"
+    },
+    "evidence_assessment": [
+      {
+        "control": "VERIFIED",
+        "index": 0,
+        "status": "CONTRADICTED"
+      }
+    ],
+    "certificate": {}
+  },
+  "updatedAt": "2026-08-18T11:01:53.121Z"
+}

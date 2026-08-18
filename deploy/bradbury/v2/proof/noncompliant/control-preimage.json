@@ -1,0 +1,12 @@
+{
+  "payload": {
+    "schema": "clausegate-control-v1",
+    "submission_id": "v2-bradbury-noncompliant-20260818",
+    "rulebook_id": "v2-bradbury-private-only-20260818",
+    "submitter": "0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7",
+    "source_url": "https://github.com/giftedlov/clausegate",
+    "evidence_commitment": "5bd67addaf1a6766484e305a3b2d6ffd58d58f2ca8188ed02ece06d38c4dd006"
+  },
+  "canonical_json": "{\"evidence_commitment\":\"5bd67addaf1a6766484e305a3b2d6ffd58d58f2ca8188ed02ece06d38c4dd006\",\"rulebook_id\":\"v2-bradbury-private-only-20260818\",\"schema\":\"clausegate-control-v1\",\"source_url\":\"https://github.com/giftedlov/clausegate\",\"submission_id\":\"v2-bradbury-noncompliant-20260818\",\"submitter\":\"0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7\"}",
+  "control_digest": "3e7c88d5d5165e7d7817d542892d8ed21ebc25b552462d12f57525bbd4417d90"
+}

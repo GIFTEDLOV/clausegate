@@ -1,0 +1,133 @@
+{
+  "stage": "VERIFIED",
+  "case": "compliant",
+  "action": "rulebook",
+  "method": "create_rulebook",
+  "args": [
+    "v2-bradbury-public-mit-20260818",
+    "Public MIT Repository Policy",
+    "A repository qualifies only when authenticated evidence establishes that it is publicly accessible and licensed under MIT.",
+    "1. The cited source repository must be publicly accessible.\n2. The cited source repository must be licensed under MIT.\n3. Unsupported submitter assertions are not sufficient; the decision must rely on the submitted authenticated evidence."
+  ],
+  "sourceContract": "0x25F2c44F55b597B9124Af414F991F1aE68913dBa",
+  "sender": "0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7",
+  "createdAt": "2026-08-18T07:52:44.226Z",
+  "txHash": "0x893e39765a4b514e266a254043f6e0c5ce97303d407d6ce6a7b08bb0829e59d7",
+  "submittedAt": "2026-08-18T07:52:46.291Z",
+  "receipt": {
+    "currentTimestamp": "1787041410",
+    "sender": "0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7",
+    "recipient": "0x25F2c44F55b597B9124Af414F991F1aE68913dBa",
+    "initialRotations": "3",
+    "txSlot": "1",
+    "createdTimestamp": "1787039565",
+    "lastVoteTimestamp": "1787039577",
+    "randomSeed": "0xa99e7d9642691273c65f9d67e3ce199f0956cc7349e06f9a9af8f6d4dbb315e6",
+    "result": 1,
+    "txExecutionHash": "0x7360801423ccc686b3b0847007088254e589e9cb302336e4d21f5f7f7ce95a4a",
+    "txCalldata": "0xf901cdb901c916046172677325fc0176322d62726164627572792d7075626c69632d6d69742d3230323630383138e4015075626c6963204d4954205265706f7369746f727920506f6c696379d40741207265706f7369746f7279207175616c6966696573206f6e6c79207768656e2061757468656e746963617465642065766964656e63652065737461626c69736865732074686174206974206973207075626c69636c792061636365737369626c6520616e64206c6963656e73656420756e646572204d49542ef40e312e2054686520636974656420736f75726365207265706f7369746f7279206d757374206265207075626c69636c792061636365737369626c652e0a322e2054686520636974656420736f75726365207265706f7369746f7279206d757374206265206c6963656e73656420756e646572204d49542e0a332e20556e737570706f72746564207375626d697474657220617373657274696f6e7320617265206e6f742073756666696369656e743b20746865206465636973696f6e206d7573742072656c79206f6e20746865207375626d69747465642061757468656e746963617465642065766964656e63652e066d6574686f647c6372656174655f72756c65626f6f6b00",
+    "eqBlocksOutputs": "0xc786706164646564",
+    "messages": [],
+    "queueType": 0,
+    "queuePosition": "0",
+    "activator": "0xa856ae1b278F030082c66Fa50A5F51F485D1F940",
+    "lastLeader": "0xE8fdefdfe18fD8E5B0d576b7CcfC5a29CE43fD7f",
+    "status": 7,
+    "txId": "0x893e39765a4b514e266a254043f6e0c5ce97303d407d6ce6a7b08bb0829e59d7",
+    "readStateBlockRange": {
+      "activationBlock": "17966764",
+      "processingBlock": "17966764",
+      "proposalBlock": "17966766"
+    },
+    "numOfRounds": "0",
+    "lastRound": {
+      "round": "0",
+      "leaderIndex": "0",
+      "votesCommitted": "5",
+      "votesRevealed": "5",
+      "appealBond": "0",
+      "rotationsLeft": "3",
+      "result": 1,
+      "roundValidators": [
+        "0xE8fdefdfe18fD8E5B0d576b7CcfC5a29CE43fD7f",
+        "0x470AAa7DE37ff3E1C2b38eD9096263ca0d541F21",
+        "0x859dF0816Ed95B22B946C56dBc004b17993d1Ed6",
+        "0x3E1E6060f746c78DB2BE0909C30A1f6A41AcD011",
+        "0x4FC292d5D255Ec8Ad4cdcd36c5E188dfEE9D160e"
+      ],
+      "validatorVotes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "validatorVotesHash": [
+        "0x1b8f8ee0f171611db56495dfc5c29653bd52d294ea138e6f0ceb5090734c8701",
+        "0x84a03ef14c1382f033b3cf26f153da02ee1e6d80bf771288a15e98b9cd7d7564",
+        "0xba672a75bcc87f9619b4b31cb08c8fecdeb0c12d4829f556e2be82e3f574a698",
+        "0x0deff1a5be13f5b8eb0692b9d9466c3be17aa5d7836f564b41105d1bee8829b6",
+        "0xaf57096b339c21d68148f3f88ec4937c86688949c2ab30cd0172458e51ab79e0"
+      ],
+      "validatorResultHash": [
+        "0x8c9616113ec2ee7bd72c9a08a5a0c10cf90c287a98dea7f02e8608735be5e333",
+        "0x8c9616113ec2ee7bd72c9a08a5a0c10cf90c287a98dea7f02e8608735be5e333",
+        "0x8c9616113ec2ee7bd72c9a08a5a0c10cf90c287a98dea7f02e8608735be5e333",
+        "0x8c9616113ec2ee7bd72c9a08a5a0c10cf90c287a98dea7f02e8608735be5e333",
+        "0x8c9616113ec2ee7bd72c9a08a5a0c10cf90c287a98dea7f02e8608735be5e333"
+      ],
+      "validatorVotesName": [
+        "AGREE",
+        "AGREE",
+        "AGREE",
+        "AGREE",
+        "AGREE"
+      ]
+    },
+    "consumedValidators": [
+      "0xE8fdefdfe18fD8E5B0d576b7CcfC5a29CE43fD7f",
+      "0x470AAa7DE37ff3E1C2b38eD9096263ca0d541F21",
+      "0x859dF0816Ed95B22B946C56dBc004b17993d1Ed6",
+      "0x3E1E6060f746c78DB2BE0909C30A1f6A41AcD011",
+      "0x4FC292d5D255Ec8Ad4cdcd36c5E188dfEE9D160e"
+    ],
+    "txExecutionResult": 1,
+    "txData": "0xf901cdb901c916046172677325fc0176322d62726164627572792d7075626c69632d6d69742d3230323630383138e4015075626c6963204d4954205265706f7369746f727920506f6c696379d40741207265706f7369746f7279207175616c6966696573206f6e6c79207768656e2061757468656e746963617465642065766964656e63652065737461626c69736865732074686174206974206973207075626c69636c792061636365737369626c6520616e64206c6963656e73656420756e646572204d49542ef40e312e2054686520636974656420736f75726365207265706f7369746f7279206d757374206265207075626c69636c792061636365737369626c652e0a322e2054686520636974656420736f75726365207265706f7369746f7279206d757374206265206c6963656e73656420756e646572204d49542e0a332e20556e737570706f72746564207375626d697474657220617373657274696f6e7320617265206e6f742073756666696369656e743b20746865206465636973696f6e206d7573742072656c79206f6e20746865207375626d69747465642061757468656e746963617465642065766964656e63652e066d6574686f647c6372656174655f72756c65626f6f6b00",
+    "txDataDecoded": {
+      "callData": {},
+      "leaderOnly": false,
+      "type": "call"
+    },
+    "numOfInitialValidators": "3",
+    "statusName": "FINALIZED",
+    "resultName": "AGREE",
+    "txExecutionResultName": "FINISHED_WITH_RETURN"
+  },
+  "classification": {
+    "ok": true,
+    "consensus_status": "FINALIZED",
+    "consensus_result": "AGREE",
+    "execution_result": "FINISHED_WITH_RETURN",
+    "validator_votes": [
+      "AGREE",
+      "AGREE",
+      "AGREE",
+      "AGREE",
+      "AGREE"
+    ]
+  },
+  "readback": {
+    "rulebook": {
+      "active": true,
+      "description": "A repository qualifies only when authenticated evidence establishes that it is publicly accessible and licensed under MIT.",
+      "owner": "0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7",
+      "rulebook_id": "v2-bradbury-public-mit-20260818",
+      "rules": "1. The cited source repository must be publicly accessible.\n2. The cited source repository must be licensed under MIT.\n3. Unsupported submitter assertions are not sufficient; the decision must rely on the submitted authenticated evidence.",
+      "title": "Public MIT Repository Policy"
+    },
+    "ids": [
+      "v2-bradbury-public-mit-20260818"
+    ]
+  },
+  "updatedAt": "2026-08-18T08:23:32.964Z"
+}

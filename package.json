@@ -14,6 +14,7 @@
     "deploy": "node deploy/scripts/deploy.mjs",
     "deploy:v2": "node deploy/scripts/v2/deploy.mjs",
     "deploy:v2:selfcheck": "node deploy/scripts/v2/selfcheck.mjs",
+    "proof:v2": "node deploy/scripts/v2/proof.mjs",
     "repro": "node deploy/scripts/selfcheck.mjs",
     "verify:evidence": "node tools/verify_release_evidence.mjs",
     "secret-scan": "node tools/secret_scan.mjs",

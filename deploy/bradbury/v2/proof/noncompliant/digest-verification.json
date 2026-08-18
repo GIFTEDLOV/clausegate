@@ -1,0 +1,50 @@
+{
+  "independent": {
+    "evidence_commitment": "5bd67addaf1a6766484e305a3b2d6ffd58d58f2ca8188ed02ece06d38c4dd006",
+    "evidence_assessment_digest": "0a77d5e7910fa2342db56c6f0686380a92594031f2c54103024583b2a075e21d",
+    "result_digest": ""
+  },
+  "onchain": {
+    "evidence_commitment": "5bd67addaf1a6766484e305a3b2d6ffd58d58f2ca8188ed02ece06d38c4dd006",
+    "evidence_assessment_digest": "",
+    "result_digest": "",
+    "certificate": {}
+  },
+  "matches": {
+    "evidence_commitment": true,
+    "assessment_control": true,
+    "certificate_absent": true,
+    "result_digest_empty": true
+  },
+  "preimages": {
+    "evidence": [
+      {
+        "claim": "The cited source repository is publicly accessible and licensed under MIT.",
+        "type": "GITHUB_REPOSITORY",
+        "url": "https://github.com/giftedlov/clausegate"
+      }
+    ],
+    "assessment": [
+      {
+        "control": "VERIFIED",
+        "index": 0,
+        "status": "CONTRADICTED"
+      }
+    ],
+    "rulebook": {
+      "active": true,
+      "description": "A repository qualifies only if the cited source repository is not publicly accessible.",
+      "owner": "0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7",
+      "rulebook_id": "v2-bradbury-private-only-20260818",
+      "rules": "1. The cited source repository must not be publicly accessible.\n2. The decision must rely on the submitted authenticated evidence rather than unsupported submitter assertions.",
+      "title": "Private Repository Policy"
+    },
+    "submission": {
+      "submission_id": "v2-bradbury-noncompliant-20260818",
+      "submitter": "0xe0f17BEf0587c3b66D2eB4BBE705dFf821AbDde7",
+      "title": "ClauseGate Against Private Repository Policy",
+      "proposal_text": "Evaluate the cited ClauseGate repository against the published private repository requirement."
+    },
+    "verdict": "NON_COMPLIANT"
+  }
+}

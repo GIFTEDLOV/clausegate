@@ -36,7 +36,7 @@ ClauseGate accepts only `COMPLIANT`, `NON_COMPLIANT`, or `UNCLEAR`.
 ## Architecture
 
 - `contracts/clausegate.py` — preserved v1 Rulebook, submission, claim-based review, certificate, and digest logic.
-- `contracts/clausegate_v2.py` — release candidate for evidence-aware reviews; not deployed.
+- `contracts/clausegate_v2.py` — deployed v2 evidence-aware review contract.
 - `frontend/` — Next.js/React application, including `/decisions` and `/certificates` read-only views.
 - `deploy/scripts/` — Bradbury deployment, receipt classification, recovery, and materialization checks.
 - `deploy/bradbury/` — preserved public deployment and proof evidence.
@@ -104,6 +104,14 @@ FINISHED_WITH_RETURN`, with verdict `COMPLIANT`, a certificate, and an
 independently verified result digest. The v1 NON_COMPLIANT proof has the same
 finalized consensus/execution state, verdict `NON_COMPLIANT`, and no certificate.
 
+The separate v2 Bradbury deployment is
+`0x25F2c44F55b597B9124Af414F991F1aE68913dBa`. Its canonical evidence-bound
+proofs and per-action transaction journals are recorded under
+[`deploy/bradbury/v2/proof/`](deploy/bradbury/v2/proof/). The v2 COMPLIANT proof
+has certificate version `2`, `SUPPORTED` evidence, and `VERIFIED` source control;
+the v2 NON_COMPLIANT proof uses the same authenticated public repository against
+a private-only Rulebook and has no certificate.
+
 ## Reproducibility and evidence
 
 The deployed v1 contract source is frozen at SHA-256
@@ -135,7 +143,7 @@ npm run dev
 Set the public Bradbury RPC and contract address in the local environment file.
 Never commit `.env.local`, wallet material, or Vercel credentials.
 
-## v2 release candidate
+## v2 deployed release
 
 `contracts/clausegate_v2.py` implements the reviewer-requested trust-model
 upgrade without changing the v1 production address or Bradbury evidence. Its
@@ -144,7 +152,8 @@ validation, evidence commitments, independently fetched source-control
 attestations, `gl.nondet.web.request` plus rendered `WEB_PAGE` content, strict
 evidence/control assessments, transient-provider fail-closed behavior, and v2
 certificate/digest binding. See [`docs/RELEASE-V2-PREP.md`](docs/RELEASE-V2-PREP.md)
-for the deployment-preparation record. No v2 address or transaction is claimed.
+for the source, deployment, and live-proof record. Production remains on the
+historical v1 address until a separately reviewed frontend repoint.
 
 ## Tests and release gates
 
@@ -166,17 +175,17 @@ npm run test:shots
 
 The browser checks are read-only structural smoke, accessibility, console/request,
 and responsive checks. Mandatory CI does not depend on live Bradbury availability
-and never holds a wallet or private key. The v1 and v2 sources are tested as
-separate candidates; no Bradbury write or production frontend repoint is part of
-this release-preparation pass.
+and never holds a wallet or private key. The v1 and v2 sources remain separate;
+the v2 deployment and proof evidence are isolated from the production frontend.
 
-For a future v2 release, publish the generated exact control JSON at
+For a v2 review, publish the generated exact control JSON at
 `.well-known/clausegate.json` on each cited first-party source. The v2 UI
 generates and copies these attestations; validators recompute the challenge
 from the wallet, submission, Rulebook, source URL, and evidence commitment.
 `npm run deploy:v2:selfcheck` checks the isolated recovery path offline;
-`npm run deploy:v2` requires an explicit deployment arming value and is not run
-as part of this candidate pass.
+`npm run deploy:v2` requires an explicit deployment arming value. The v2
+deployment journal and proof journals use hash-first recovery and are never
+mixed with the v1 deployment evidence.
 
 ## Deployment and release history
 
